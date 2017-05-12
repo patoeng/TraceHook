@@ -1,0 +1,5 @@
+﻿1>------ Build started: Project: Traceability.Hook.Tester, Configuration: Debug Any CPU ------
+2>------ Build started: Project: TraceabilityConnector, Configuration: Debug Any CPU ------
+1>  Traceability.Hook.Tester -> C:\Users\ANOMANX\Documents\Visual Studio 2015\Projects\Traceability.Hook\Traceability.Hook.Tester\bin\Debug\Traceability.Hook.Tester.exe
+2>  TraceabilityConnector -> C:\Users\ANOMANX\Documents\Visual Studio 2015\Projects\Traceability.Hook\TraceabilityConnector\bin\Debug\TraceabilityConnector.exe
+========== Build: 2 succeeded, 0 failed, 2 up-to-date, 0 skipped ==========
