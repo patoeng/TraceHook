@@ -275,13 +275,7 @@ namespace Traceability.Hook
                 return false;
             }
 
-            ReferenceParsed parsed;
-            ParseProductFullName(productFullName, out parsed);
-            if (parsed.ReferencePart != _thisMachineReference.Reference)
-            {
-                MachineHookErrorOccured?.Invoke("Reference Not Matched");
-                return false;
-            }
+           
             var result = new SqlParameter("@result", SqlDbType.Int)
             {
                 Direction = ParameterDirection.Output
@@ -754,5 +748,92 @@ namespace Traceability.Hook
          _thisMachineReference = new Product();   
           return true;
      }
+
+     public bool GetProductLastProcessWithDetails(string productFullName, out ProductProcessWithDetails lastProcessedInMachine)
+     {
+            lastProcessedInMachine = new ProductProcessWithDetails();
+            var check = CheckIfInitialized();
+            if (!check)
+            {
+                return false;
+            }
+            var parameters = new[]
+            {
+             new SqlParameter("@productFullName", SqlDbType.NVarChar, 40) {SqlValue = productFullName }
+         };
+            try
+            {
+                var dbMachine = SqlHelper.ExecuteDataset(_dbConnection, CommandType.StoredProcedure,
+                    "usp_GetProductLastMachineProcessDetails",
+                    parameters);
+
+                if (dbMachine?.Tables.Count > 0)
+                {
+                    if (dbMachine.Tables[0].Rows.Count > 0)
+                    {
+                        var row = dbMachine.Tables[0].Rows[0];
+                        lastProcessedInMachine = new ProductProcessWithDetails()
+                        {
+                            Id = row.Field<int>("Id"),
+                            DateTime = row.Field<DateTime>("DateTime"),
+                            DataMatrix = row.Field<string>("FullName"),
+                            MachineName = row.Field<string>("MachineName"),
+                            Reference = row.Field<string>("Reference"),
+                            Remarks = row.Field<string>("Remarks"),
+                            Result = row.Field<ProcessResult>("Result"),
+                            WorkOrderNumber = row.Field<string>("WorkOrderNumber")
+                        };
+                        if(lastProcessedInMachine.Id>0) return true;
+                    }
+                   
+                }
+
+            }
+            catch (Exception exception)
+            {
+                MachineHookException?.Invoke(exception.Message);
+            }
+            return false;
+        }
+
+     public bool ForceUpdateProductStatusOk(string productFullName, out int status)
+     {
+            status = -1;
+            var check = CheckIfInitialized();
+            if (!check)
+            {
+                return false;
+            }
+
+
+            var result = new SqlParameter("@result", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            var parameters = new[]
+            {
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
+            new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
+            result
+        };
+            try
+            {
+                var i = SqlHelper.ExecuteNonQuery(_dbConnection, CommandType.StoredProcedure, "usp_ForceUpdateProductOk", parameters);
+            }
+            catch (Exception exception)
+            {
+                MachineHookException?.Invoke(exception.Message);
+                return false;
+            }
+
+            status = Convert.ToInt32(result.SqlValue.ToString());
+
+            if (status > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
  }
 }

@@ -71,6 +71,7 @@
             this.btn_WriteToLoading = new System.Windows.Forms.Button();
             this.btn_WriteToUnloading = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_ByPass = new System.Windows.Forms.Button();
             this.chb_ScanLamp = new System.Windows.Forms.CheckBox();
             this.lbl_VirtualIndexer = new System.Windows.Forms.Label();
             this.lbl_TraceabilityStates = new System.Windows.Forms.Label();
@@ -81,6 +82,7 @@
             this.lb_Indexer = new System.Windows.Forms.ListBox();
             this.label14 = new System.Windows.Forms.Label();
             this.gb_MachineSimulation = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.btn_Hide = new System.Windows.Forms.Button();
             this.btn_IndexTable = new System.Windows.Forms.Button();
             this.btn_SetProcessNok = new System.Windows.Forms.Button();
@@ -91,9 +93,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btn_ByPass = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.tmr_PlcRetry = new System.Windows.Forms.Timer(this.components);
+            this.label15 = new System.Windows.Forms.Label();
+            this.lbl_Message = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -117,7 +119,7 @@
             // 
             // btn_Initialize
             // 
-            this.btn_Initialize.Location = new System.Drawing.Point(12, 558);
+            this.btn_Initialize.Location = new System.Drawing.Point(12, 593);
             this.btn_Initialize.Name = "btn_Initialize";
             this.btn_Initialize.Size = new System.Drawing.Size(75, 42);
             this.btn_Initialize.TabIndex = 1;
@@ -127,7 +129,7 @@
             // 
             // btn_Setting
             // 
-            this.btn_Setting.Location = new System.Drawing.Point(93, 558);
+            this.btn_Setting.Location = new System.Drawing.Point(93, 593);
             this.btn_Setting.Name = "btn_Setting";
             this.btn_Setting.Size = new System.Drawing.Size(75, 42);
             this.btn_Setting.TabIndex = 2;
@@ -396,7 +398,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lbl_Message);
             this.groupBox3.Controls.Add(this.lbl_LoadingDataMatrix);
+            this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.lbl_LoadingStatus);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label9);
@@ -404,7 +408,7 @@
             this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.groupBox3.Location = new System.Drawing.Point(14, 291);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(493, 75);
+            this.groupBox3.Size = new System.Drawing.Size(493, 101);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Loading Status";
@@ -459,7 +463,7 @@
             this.groupBox4.Controls.Add(this.label20);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.groupBox4.Location = new System.Drawing.Point(14, 372);
+            this.groupBox4.Location = new System.Drawing.Point(14, 400);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(493, 86);
             this.groupBox4.TabIndex = 10;
@@ -547,12 +551,23 @@
             this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.groupBox5.Location = new System.Drawing.Point(14, 464);
+            this.groupBox5.Location = new System.Drawing.Point(14, 492);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(493, 88);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Traceability Status";
+            // 
+            // btn_ByPass
+            // 
+            this.btn_ByPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ByPass.Location = new System.Drawing.Point(402, 59);
+            this.btn_ByPass.Name = "btn_ByPass";
+            this.btn_ByPass.Size = new System.Drawing.Size(68, 23);
+            this.btn_ByPass.TabIndex = 2;
+            this.btn_ByPass.Text = "By Pass";
+            this.btn_ByPass.UseVisualStyleBackColor = true;
+            this.btn_ByPass.Click += new System.EventHandler(this.btn_ByPass_Click);
             // 
             // chb_ScanLamp
             // 
@@ -671,6 +686,16 @@
             this.gb_MachineSimulation.Text = "Machine Simulation";
             this.gb_MachineSimulation.Visible = false;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(203, 137);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // btn_Hide
             // 
             this.btn_Hide.Location = new System.Drawing.Point(241, 312);
@@ -769,31 +794,31 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // btn_ByPass
-            // 
-            this.btn_ByPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ByPass.Location = new System.Drawing.Point(402, 59);
-            this.btn_ByPass.Name = "btn_ByPass";
-            this.btn_ByPass.Size = new System.Drawing.Size(68, 23);
-            this.btn_ByPass.TabIndex = 2;
-            this.btn_ByPass.Text = "By Pass";
-            this.btn_ByPass.UseVisualStyleBackColor = true;
-            this.btn_ByPass.Click += new System.EventHandler(this.btn_ByPass_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(203, 137);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // tmr_PlcRetry
             // 
             this.tmr_PlcRetry.Interval = 10000;
             this.tmr_PlcRetry.Tick += new System.EventHandler(this.tmr_PlcRetry_Tick);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(16, 67);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(65, 16);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Message";
+            // 
+            // lbl_Message
+            // 
+            this.lbl_Message.AutoSize = true;
+            this.lbl_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Message.ForeColor = System.Drawing.Color.Green;
+            this.lbl_Message.Location = new System.Drawing.Point(120, 67);
+            this.lbl_Message.Name = "lbl_Message";
+            this.lbl_Message.Size = new System.Drawing.Size(45, 16);
+            this.lbl_Message.TabIndex = 1;
+            this.lbl_Message.Text = "label2";
             // 
             // TraceabilityConnector
             // 
@@ -904,6 +929,8 @@
         private System.Windows.Forms.Button btn_ByPass;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Timer tmr_PlcRetry;
+        private System.Windows.Forms.Label lbl_Message;
+        private System.Windows.Forms.Label label15;
     }
 }
 

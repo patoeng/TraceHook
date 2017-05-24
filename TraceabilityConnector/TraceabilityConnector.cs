@@ -61,8 +61,6 @@ namespace TraceabilityConnector
                 {                   
                     lbl_PlcConnection.Text = @"Connected";
                      if(!_enableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
-                    //_dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
-                   // _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.Unknown);
                     _dataAcquisition.SetVirtualIndexer(
                     _enableVirtualIndexer ? VirtualIndexerStates.IndexConfirmed : VirtualIndexerStates.NotIndexed);
 
@@ -72,7 +70,6 @@ namespace TraceabilityConnector
 
                     tmr_Scanner.Start();
                    
-
                 }
                catch (Exception exception)
                 {
@@ -157,7 +154,7 @@ namespace TraceabilityConnector
                 case VirtualIndexerStates.NewlyIndexed:
                     SetLabelText(lbl_VirtualIndexer, "Newly Indexed");
                     _machineData.VirtualIndexer.ShiftProductStationRight("", 1, 1, 1);
-                    _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.UpdateTraceabilityStatus);
+                    _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.WaitingTraceabilityStatusCheck);
                     break;
                 case VirtualIndexerStates.IndexConfirmed:
                     SetLabelText(lbl_VirtualIndexer, "Index Confirmed");
@@ -321,8 +318,6 @@ namespace TraceabilityConnector
             }
         }
 
-       
-
         private void ProductInLoadingStatusChanged(ProductStatus eproductstatus)
         {
             if (!_traceabilityEnabled) return;
@@ -341,8 +336,6 @@ namespace TraceabilityConnector
                         _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.TraceabilityCheckedNok);
                         break;
                     }
-                  
-                    
                         int status;
                         CheckReferenceLoadIfUnMatch(product);
                         var result = _thisMachine.LoadProduct(product, "", out status);
@@ -350,7 +343,7 @@ namespace TraceabilityConnector
                         _dataAcquisition.UpdateProductInLoadingStatus(result
                             ? ProductStatus.TraceabilityCheckedOk
                             : ProductStatus.TraceabilityCheckedNok);
-                    
+
                     if (result && _enableVirtualIndexer)
                     {
                         _machineData.VirtualIndexer.SetProductToStation(0, product, 1, 1);
@@ -408,7 +401,7 @@ namespace TraceabilityConnector
 
             lb.Items.Clear();
             var number = _machineData?.VirtualIndexer?.NumberOfStation();
-            for (int i = 0; i < number; i++)
+            for (var i = 0; i < number; i++)
             {
                 string product;
                 _machineData.VirtualIndexer.GetStationProduct(i, out product);
@@ -458,16 +451,13 @@ namespace TraceabilityConnector
             return result;
         }
         private void PlcScanMapping(int[] data)
-        { 
-            
+        {  
             _machineData.ProductInLoadingStatus= (ProductStatus)data[1];
             _machineData.ProductInUnloadingStatus = (ProductStatus)data[2];
             _machineData.TraceabilityStates = (TraceabilityStates) data[3];
-           _machineData.VirtualIndexerStates=(VirtualIndexerStates)data[4];
+            _machineData.VirtualIndexerStates=(VirtualIndexerStates)data[4];
         }
         #endregion
-
-
 
         private void btn_Initialize_Click(object sender, EventArgs e)
         {
@@ -553,19 +543,22 @@ namespace TraceabilityConnector
         public void SetProductTraceabilityOk(string dataMatrix)
         {
             if (!_traceabilityEnabled) return;
+            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
             _dataAcquisition.WriteProductInUnloading(dataMatrix);
             _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateOk);
         }
         public void SetProductTraceabilityNok(string dataMatrix)
         {
             if (!_traceabilityEnabled) return;
+            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
             _dataAcquisition.WriteProductInUnloading(dataMatrix);
             _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk);
         }
         public void LoadProductTraceability(string dataMatrix)
         {
             if (!_traceabilityEnabled) return;
-           _dataAcquisition.WriteProductInLoading(dataMatrix);
+            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
+            _dataAcquisition.WriteProductInLoading(dataMatrix);
            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.LoadedNeedTraceabilityCheck);
         }
 
@@ -578,6 +571,18 @@ namespace TraceabilityConnector
             int status;
             if (!_traceabilityEnabled) return false;
             return _thisMachine.ProductDismantle(dataMatrix, "Auto", out status);
+        }
+        public bool ForceUpdateProductOk(string dataMatrix)
+        {
+            int status;
+            if (!_traceabilityEnabled) return false;
+            return _thisMachine.ForceUpdateProductStatusOk(dataMatrix, out status);
+        }
+        public bool GetProductByDataMatrix(string dataMatrix, out ProductProcessWithDetails productProcess)
+        {
+            productProcess = new ProductProcessWithDetails();
+            if (!_traceabilityEnabled) return false;
+            return _thisMachine.GetProductLastProcessWithDetails(dataMatrix, out productProcess);
         }
         public bool CreateWorkOrderIfNotExistedReloadIfExisted(string workOrderNumber, string reference,int target)
         {

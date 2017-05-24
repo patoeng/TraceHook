@@ -55,6 +55,7 @@
     <Compile Include="Models\ProcessResult.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductProcess.cs" />
+    <Compile Include="Models\ProductProcessWithDetails.cs" />
     <Compile Include="Models\ProductReference.cs" />
     <Compile Include="Models\ProductSequenceItem.cs" />
     <Compile Include="Models\Workorder.cs" />

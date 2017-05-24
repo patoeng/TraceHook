@@ -11,11 +11,13 @@ namespace Traceability.Hook
         bool Initialize();
         bool GetMachineBySerialNumber(string serialnumber, string connection, out Machine resultMachine);
         bool GetProductLastProcess(string productFullName, out ProductProcess lastProductProcess);
+        bool GetProductLastProcessWithDetails(string productFullName, out ProductProcessWithDetails lastProductProcess);
         bool LoadProduct(string productFullname,string remarks,out int status);
         bool StartProductTraceability(string productFullName,string remarks, out int status);
         bool UpdateProductStatusOk(string productFullName, string remarks, out int status);
         bool UpdateProductStatusNOk(string productFullName, string remarks, out int status);
         bool ProductDismantle(string productFullName, string remarks, out int status);
+        bool ForceUpdateProductStatusOk(string productFullName,  out int status);
         bool GetProductByReference(string reference, out int productId);
         bool ParseProductFullName(string productFullname, out ReferenceParsed reference);
         string ShowMachineSerialNumber();
