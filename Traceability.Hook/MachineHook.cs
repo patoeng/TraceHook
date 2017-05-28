@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 using Microsoft.ApplicationBlocks.Data;
 using Traceability.Hook.Models;
 
@@ -393,7 +396,7 @@ namespace Traceability.Hook
                 MachineHookException?.Invoke(exception.Message);
                 return false;
             }
-            status = Convert.ToInt32(result.SqlValue.ToString());
+            status = result.Value !=null ? Convert.ToInt32(result.SqlValue.ToString()) : -1;
          if (status > 0)
          {
              return true;
@@ -835,5 +838,149 @@ namespace Traceability.Hook
 
             return false;
         }
+
+     public bool ProductProcessJumpBack(int processId, int jumpBackToMachineFamily)
+     {
+            var status = -1;
+            var check = CheckIfInitialized();
+            if (!check)
+            {
+                return false;
+            }
+
+
+            var result = new SqlParameter("@result", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            var parameters = new[]
+            {
+            new SqlParameter("@processId", SqlDbType.NVarChar, 40) {SqlValue = processId},
+            new SqlParameter("@jumpBackToMachineFamily", SqlDbType.Int) {SqlValue = jumpBackToMachineFamily},
+            result
+        };
+            try
+            {
+                var i = SqlHelper.ExecuteNonQuery(_dbConnection, CommandType.StoredProcedure, "usp_ProductProcessJumpBack", parameters);
+            }
+            catch (Exception exception)
+            {
+                MachineHookException?.Invoke(exception.Message);
+                return false;
+            }
+
+            status = Convert.ToInt32(result.SqlValue.ToString());
+
+            if (status > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+     public bool ProductRename(string currentDataMatrix, string newDataMatrix)
+     {
+            var status = -1;
+            var check = CheckIfInitialized();
+            if (!check)
+            {
+                return false;
+            }
+
+            //Check if the product are same reference
+            ReferenceParsed parsedCurrentDataMatrix;
+            ReferenceParsed parsedNewDataMatrix;
+            ParseProductFullName(currentDataMatrix, out parsedCurrentDataMatrix);
+            ParseProductFullName(newDataMatrix, out parsedNewDataMatrix);
+             if (!(parsedNewDataMatrix.ArticlePart == parsedCurrentDataMatrix.ArticlePart && parsedNewDataMatrix.ReferencePart==parsedCurrentDataMatrix.ReferencePart ))
+             {
+                 return false;
+             }
+
+
+            var result = new SqlParameter("@result", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            var parameters = new[]
+            {
+            new SqlParameter("@currentDataMatrix", SqlDbType.NVarChar, 40) {SqlValue = currentDataMatrix},
+            new SqlParameter("@newDataMatrix", SqlDbType.NVarChar,40) {SqlValue = newDataMatrix},
+            result
+        };
+            try
+            {
+                var i = SqlHelper.ExecuteNonQuery(_dbConnection, CommandType.StoredProcedure, "usp_ProductRename", parameters);
+            }
+            catch (Exception exception)
+            {
+                MachineHookException?.Invoke(exception.Message);
+                return false;
+            }
+
+            status = Convert.ToInt32(result.SqlValue.ToString());
+
+            if (status > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+     public bool GetPreviousSequenceMachinesByProcessId(int processId, out List<ProductSequenceItem> machines)
+     {
+            machines = new List<ProductSequenceItem>(0);
+            var check = CheckIfInitialized();
+            if (!check)
+            {
+                return false;
+            }
+
+
+            var result = new SqlParameter("@result", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            var parameters = new[]
+            {
+            new SqlParameter("@processId", SqlDbType.NVarChar, 30) {SqlValue = processId},
+            result
+        };
+            try
+            {
+                var dataset = SqlHelper.ExecuteDataset(_dbConnection, CommandType.StoredProcedure, "GetPreviousSequenceMachinesByProcessId", parameters);
+                if (dataset.Tables.Count <= 0) return false;
+                var tables = dataset.Tables[0];
+                var rowCount = tables.Rows.Count;
+                if (rowCount <= 0) return false;
+                machines = new List<ProductSequenceItem>(rowCount);
+
+                foreach (DataRow row in tables.Rows)
+                {
+                    var machine = new ProductSequenceItem
+                    {
+                        Id = row.Field<int>("Id"),
+                        Level = row.Field<int>("Level"),
+                        MachineFamilyId = row.Field<int>("MachineFamilyId"),
+                        ProductSequenceId = row.Field<int>("ProductSequenceId"),
+                        MachineFamilyname = row.Field<string>("MachineFamilyname")
+                    };
+                    machines.Add(machine);  
+                }
+                return true;
+            }
+            catch (Exception exception)
+            {
+                MachineHookException?.Invoke(@"Get Sequence Machine : "+exception.Message);
+                return false;
+            }
+
+          
+        }
+
+    
+     
  }
 }

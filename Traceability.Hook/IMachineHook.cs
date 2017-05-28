@@ -1,4 +1,5 @@
-﻿using Traceability.Hook.Models;
+﻿using System.Collections.Generic;
+using Traceability.Hook.Models;
 
 namespace Traceability.Hook
 {
@@ -36,6 +37,11 @@ namespace Traceability.Hook
         bool UnloadReference();
 
         bool LoadReferenceCheck(string reference, out int productId);
+
+        bool ProductProcessJumpBack(int processId, int jumpBackToMachineFamily);
+        bool ProductRename(string currentDataMatrix, string newDataMatrix);
+        bool GetPreviousSequenceMachinesByProcessId(int processId, out List<ProductSequenceItem> machines);
+
     }
 
      public delegate void MesEventHandlerWithInfo(string info);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Traceability.Hook;
@@ -62,7 +63,7 @@ namespace TraceabilityConnector
                     lbl_PlcConnection.Text = @"Connected";
                      if(!_enableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
                     _dataAcquisition.SetVirtualIndexer(
-                    _enableVirtualIndexer ? VirtualIndexerStates.IndexConfirmed : VirtualIndexerStates.NotIndexed);
+                    _enableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
 
                    SetTraceabilityStates(_traceabilityEnabled? TraceabilityStates.WaitingForReference: TraceabilityStates.ByPassed);
                     btn_ByPass.Text = _traceabilityEnabled ? "By Pass" : "Activate";
@@ -117,7 +118,6 @@ namespace TraceabilityConnector
             }
            
             _dataAcquisition.DataAcquisitionOnException += DataAcquisitionOnException;
-
         }
 
         private void DataAcquisitionOnException(string exception)
@@ -154,7 +154,7 @@ namespace TraceabilityConnector
                 case VirtualIndexerStates.NewlyIndexed:
                     SetLabelText(lbl_VirtualIndexer, "Newly Indexed");
                     _machineData.VirtualIndexer.ShiftProductStationRight("", 1, 1, 1);
-                    _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.WaitingTraceabilityStatusCheck);
+                    _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.UpdateTraceabilityStatus);
                     break;
                 case VirtualIndexerStates.IndexConfirmed:
                     SetLabelText(lbl_VirtualIndexer, "Index Confirmed");
@@ -166,9 +166,61 @@ namespace TraceabilityConnector
                     break;
                 case VirtualIndexerStates.WaitingTraceabilityStatusCheck:
                     SetLabelText(lbl_VirtualIndexer, "Waiting Traceability Status Check");
+                    if (_enableVirtualIndexer && _machineData.ProductInLoadingStatus== ProductStatus.LoadedNeedTraceabilityCheck)
+                    {
+                        var product = ReadLoading();
+                        if (product == string.Empty)
+                        {
+                            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.TraceabilityCheckedNok);
+                            break;
+                        }
+                        int status;
+                        CheckReferenceLoadIfUnMatch(product);
+                        var result = _thisMachine.LoadProduct(product, "", out status);
+
+                        _dataAcquisition.UpdateProductInLoadingStatus(result
+                            ? ProductStatus.TraceabilityCheckedOk
+                            : ProductStatus.TraceabilityCheckedNok);
+
+                        if (result && _enableVirtualIndexer)
+                        {
+                            _machineData.VirtualIndexer.SetProductToStation(0, product, 1, 1);
+                            VirtualIndexerToListBox(lb_Indexer);
+                            _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.IndexConfirmed);
+                        }
+                    }
                     break;
                 case VirtualIndexerStates.UpdateTraceabilityStatus:
                     SetLabelText(lbl_VirtualIndexer, "Waiting Unloading Traceability Status Update");
+                    if (_enableVirtualIndexer &&
+                        _machineData.ProductInUnloadingStatus == ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk)
+                    {
+                        var product = ReadUnloading();
+                        var result = false;
+                        if (product != string.Empty)
+                        {
+                            int status;
+                            result = _thisMachine.UpdateProductStatusNOk(product, "Auto", out status);
+                        }
+                        _dataAcquisition.UpdateProductInUnloadingStatus(
+                           result ? ProductStatus.TraceabilityStatusUpdated : ProductStatus.TraceabilityStatusNotUpdated);
+                        _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.WaitingTraceabilityStatusCheck);
+                    }
+                    if (_enableVirtualIndexer &&
+                       _machineData.ProductInUnloadingStatus == ProductStatus.LoadedNeedTraceabilityStatusUpdateOk)
+                    {
+                        var product = ReadUnloading();
+
+                        var result = false;
+                        if (product != string.Empty)
+                        {
+                            int status;
+                            result = _thisMachine.UpdateProductStatusOk(product, "Auto", out status);
+                        }
+                        _dataAcquisition.UpdateProductInUnloadingStatus(
+                           result ? ProductStatus.TraceabilityStatusUpdated : ProductStatus.TraceabilityStatusNotUpdated);
+                        _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.WaitingTraceabilityStatusCheck);
+                    }
                     break;
             }
             VirtualIndexerToListBox(lb_Indexer);
@@ -282,8 +334,15 @@ namespace TraceabilityConnector
             switch (eproductstatus)
             {
                 case ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk:
+                   
                     SetLabelText(lbl_UnloadingState, "Unloaded Need Traceability Update Status Nok");
+                    if (_enableVirtualIndexer &&
+                     _machineData.VirtualIndexerStates != VirtualIndexerStates.UpdateTraceabilityStatus)
+                    {
+                        return;
+                    }
                     product = ReadUnloading();
+                    
                     result = false;
                     if (product != string.Empty)
                     {
@@ -295,7 +354,11 @@ namespace TraceabilityConnector
                     break;
                 case ProductStatus.LoadedNeedTraceabilityStatusUpdateOk:
                     SetLabelText(lbl_UnloadingState, "Unloaded Need Traceability Status Ok");
-
+                    if (_enableVirtualIndexer &&
+                      _machineData.VirtualIndexerStates != VirtualIndexerStates.UpdateTraceabilityStatus)
+                    {
+                        return;
+                    }
                     product = ReadUnloading();
                     result = false;
                     if (product != string.Empty)
@@ -329,8 +392,13 @@ namespace TraceabilityConnector
                     break;
                 case ProductStatus.LoadedNeedTraceabilityCheck:
                     SetLabelText(lbl_LoadingStatus, "Loaded Need Traceability Check");                   
+                  
+                    if (_enableVirtualIndexer &&
+                        _machineData.VirtualIndexerStates != VirtualIndexerStates.WaitingTraceabilityStatusCheck)
+                    {
+                        return;
+                    }
                     var product = ReadLoading();
-                   
                     if (product == string.Empty)
                     {
                         _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.TraceabilityCheckedNok);
@@ -495,8 +563,8 @@ namespace TraceabilityConnector
                 }
                 catch (Exception ex)
                 {
-                    DaqReInitialize();
-                    ShowInformation(@"PLC:" + ex.Message);                 
+                    ShowInformation(@"PLC:" + ex.Message);
+                    DaqReInitialize();               
                 }
 
                 if (!lbl_PlcConnection.Text.Equals(@"Not Connected"))
@@ -600,6 +668,20 @@ namespace TraceabilityConnector
             return _traceabilityEnabled;
         }
 
+        public bool GetPreviousSequenceMachinesByProcessId(int processId, out List<ProductSequenceItem> machines)
+        {
+            return _thisMachine.GetPreviousSequenceMachinesByProcessId(processId, out machines);
+        }
+
+        public bool ProductProcessJumpBack(int processId, int jumpBackToMachineFamily)
+        {
+            return _thisMachine.ProductProcessJumpBack(processId, jumpBackToMachineFamily);
+        }
+
+        public bool ProductRename(string currentDataMatrix, string newDataMatrix)
+        {
+            return _thisMachine.ProductRename(currentDataMatrix, newDataMatrix);
+        }
         #endregion
 
         private void btn_LoadReference_Click(object sender, EventArgs e)

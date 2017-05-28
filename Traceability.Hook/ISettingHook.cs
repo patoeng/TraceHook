@@ -25,5 +25,6 @@
         int GetPlcUnloadingDataMatrixStartAddress();
         bool GetVirtualIndexer();
         int GetPlcActiveReferenceStartAddress();
+       
     }
 }
