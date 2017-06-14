@@ -35,13 +35,17 @@ namespace TraceabilityConnector
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            
+          
+            tmr_CLock.Start();
         }
 #region Non Form Events
 
         private void InitAll()
         {
-            tb_ShowInformation.Clear();
+             gb_Embedded.Visible = EmbeddedMode;
+             lbl_OrderNumber.Text = "";
+
+             tb_ShowInformation.Clear();
             _setting = new SettingHook();
             _plcIpAddress = _setting.GetPlcIpAdress();
             _traceabilityEnabled = _setting.GetEnableTraceability();
@@ -62,9 +66,10 @@ namespace TraceabilityConnector
                 {                   
                     lbl_PlcConnection.Text = @"Connected";
                      if(!_enableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
+                    _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.TraceabilityStatusNotUpdated);
                     _dataAcquisition.SetVirtualIndexer(
-                    _enableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
-
+                        _enableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
+                    
                    SetTraceabilityStates(_traceabilityEnabled? TraceabilityStates.WaitingForReference: TraceabilityStates.ByPassed);
                     btn_ByPass.Text = _traceabilityEnabled ? "By Pass" : "Activate";
                    if (!_enableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
@@ -256,6 +261,8 @@ namespace TraceabilityConnector
             lbl_PreviousMachine.Text = string.Empty;
             lbl_plcIpAddress.Text = _plcIpAddress;
             lbl_PlcConnection.Text = @"Not Connected";
+
+            myNotifyIcon.Text = @"Traceability " + lbl_MachineName.Text;
         }
 
         private void SetTraceabilityStates(TraceabilityStates states)
@@ -437,7 +444,7 @@ namespace TraceabilityConnector
         {
             ShowInformation(info);
         }
-        private void ShowInformation(string text)
+        public void ShowInformation(string text)
         {
             if (tb_ShowInformation.InvokeRequired)
             {
@@ -446,7 +453,7 @@ namespace TraceabilityConnector
             }
             else
             {
-                tb_ShowInformation.AppendText(text + "\r\n");
+                tb_ShowInformation.AppendText(DateTime.Now.ToString("f")+" : "+ text + "\r\n");
             }
         }
         private void SetLabelText(Label label, string text)
@@ -605,20 +612,23 @@ namespace TraceabilityConnector
         {
             int status;
             if (!_traceabilityEnabled) return false;
-            return _thisMachine.StartProductTraceability(dataMatrix, "Auto", out status);          
+            var result =  _thisMachine.StartProductTraceability(dataMatrix, "Auto", out status);
+            lbl_GeneratedDataMatrix.Text = dataMatrix;
+            lbl_GenerateResult.Text = result ? "Successful" : "Failed";
+            return result;
         }
 
         public void SetProductTraceabilityOk(string dataMatrix)
         {
             if (!_traceabilityEnabled) return;
-            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
+            _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.Unknown);
             _dataAcquisition.WriteProductInUnloading(dataMatrix);
             _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateOk);
         }
         public void SetProductTraceabilityNok(string dataMatrix)
         {
             if (!_traceabilityEnabled) return;
-            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
+            _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.Unknown);
             _dataAcquisition.WriteProductInUnloading(dataMatrix);
             _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk);
         }
@@ -627,7 +637,7 @@ namespace TraceabilityConnector
             if (!_traceabilityEnabled) return;
             _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
             _dataAcquisition.WriteProductInLoading(dataMatrix);
-           _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.LoadedNeedTraceabilityCheck);
+            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.LoadedNeedTraceabilityCheck);
         }
 
         public void LoadReference(string reference)
@@ -660,7 +670,9 @@ namespace TraceabilityConnector
             if (!result) return false;
             _machineData.ActiveReference = reference;
             int status;
-            return _thisMachine.CreateWorkOrderIfNotExisted(workOrderNumber, productId, target, out status);
+            var result2 = _thisMachine.CreateWorkOrderIfNotExisted(workOrderNumber, productId, target, out status);
+            lbl_OrderNumber.Text = result2 ? workOrderNumber : "";
+            return result2;
         }
 
         public bool TraceabilityEnabled()
@@ -711,18 +723,45 @@ namespace TraceabilityConnector
 
         private void TraceabilityConnector_FormClosing_1(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.UserClosing && e.CloseReason != CloseReason.None || !EmbeddedMode)
+            if (e.CloseReason == CloseReason.UserClosing && !EmbeddedMode)
+            {
+                e.Cancel = true;
+                var r = MessageBox.Show(@"Are you sure want to exit?",@"Close Application",MessageBoxButtons.OKCancel,MessageBoxIcon.Question);
+                if (r == DialogResult.OK)
+                {
+                    e.Cancel = false;
+                }
                 return;
-            e.Cancel = true;
-            Hide();
+            }
+            if (e.CloseReason != CloseReason.UserClosing && e.CloseReason != CloseReason.None || !EmbeddedMode)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
 
         private void TraceabilityConnector_Resize(object sender, EventArgs e)
         {
-            if (!EmbeddedMode) return;
-            if (WindowState == FormWindowState.Minimized)
+            if (EmbeddedMode)
             {
-                Hide();
+                if (FormWindowState.Minimized == this.WindowState)
+                {
+                    myNotifyIcon.Visible = true;
+                    myNotifyIcon.ShowBalloonTip(500);
+                    this.Hide();
+                }
+
+                else if (FormWindowState.Normal == this.WindowState)
+                {
+                    myNotifyIcon.Visible = false;
+                }
+            }
+            else
+            {
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    Hide();
+                }
             }
         }
 
@@ -797,6 +836,31 @@ namespace TraceabilityConnector
         {
             tmr_PlcRetry.Stop();
             InitAll();
+        }
+
+        private void btnAlarmClear_Click(object sender, EventArgs e)
+        {
+            tb_ShowInformation.Clear();
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gb_Embedded_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tmr_CLock_Tick(object sender, EventArgs e)
+        {
+            lbl_Clock.Text = DateTime.Now.ToString("F");
+        }
+
+        private void myNotifyIcon_Click(object sender, EventArgs e)
+        {
+            Show();
         }
     }
 }

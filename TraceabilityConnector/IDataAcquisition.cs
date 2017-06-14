@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace TraceabilityConnector
+﻿namespace TraceabilityConnector
 {
     public delegate void DataAcquisitionOnException(string exception);
     public interface IDataAcquisition

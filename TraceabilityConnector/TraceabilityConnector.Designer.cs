@@ -45,7 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_MachineCode = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbEmbedded = new System.Windows.Forms.GroupBox();
             this.btn_LoadReference = new System.Windows.Forms.Button();
             this.lbl_PreviousMachine = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -58,7 +58,9 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lbl_Message = new System.Windows.Forms.Label();
             this.lbl_LoadingDataMatrix = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.lbl_LoadingStatus = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -94,15 +96,25 @@
             this.label22 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tmr_PlcRetry = new System.Windows.Forms.Timer(this.components);
-            this.label15 = new System.Windows.Forms.Label();
-            this.lbl_Message = new System.Windows.Forms.Label();
+            this.gb_Embedded = new System.Windows.Forms.GroupBox();
+            this.lbl_OrderNumber = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.lbl_GenerateResult = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.lbl_GeneratedDataMatrix = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.btnAlarmClear = new System.Windows.Forms.Button();
+            this.tmr_CLock = new System.Windows.Forms.Timer(this.components);
+            this.lbl_Clock = new System.Windows.Forms.Label();
+            this.myNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbEmbedded.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.gb_MachineSimulation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gb_Embedded.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_Scanner
@@ -111,11 +123,14 @@
             // 
             // tb_ShowInformation
             // 
-            this.tb_ShowInformation.Location = new System.Drawing.Point(557, 40);
+            this.tb_ShowInformation.Location = new System.Drawing.Point(513, 45);
             this.tb_ShowInformation.Multiline = true;
             this.tb_ShowInformation.Name = "tb_ShowInformation";
-            this.tb_ShowInformation.Size = new System.Drawing.Size(322, 82);
+            this.tb_ShowInformation.ReadOnly = true;
+            this.tb_ShowInformation.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tb_ShowInformation.Size = new System.Drawing.Size(366, 101);
             this.tb_ShowInformation.TabIndex = 0;
+            this.tb_ShowInformation.WordWrap = false;
             // 
             // btn_Initialize
             // 
@@ -264,25 +279,26 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Machine Code";
             // 
-            // groupBox2
+            // gbEmbedded
             // 
-            this.groupBox2.Controls.Add(this.btn_LoadReference);
-            this.groupBox2.Controls.Add(this.lbl_PreviousMachine);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.lbl_Sequence);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.lbl_Article);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.lbl_Reference);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.groupBox2.Location = new System.Drawing.Point(12, 163);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(494, 120);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Reference Information";
+            this.gbEmbedded.Controls.Add(this.btn_LoadReference);
+            this.gbEmbedded.Controls.Add(this.lbl_PreviousMachine);
+            this.gbEmbedded.Controls.Add(this.label8);
+            this.gbEmbedded.Controls.Add(this.lbl_Sequence);
+            this.gbEmbedded.Controls.Add(this.label7);
+            this.gbEmbedded.Controls.Add(this.lbl_Article);
+            this.gbEmbedded.Controls.Add(this.label5);
+            this.gbEmbedded.Controls.Add(this.lbl_Reference);
+            this.gbEmbedded.Controls.Add(this.label3);
+            this.gbEmbedded.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbEmbedded.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.gbEmbedded.Location = new System.Drawing.Point(12, 163);
+            this.gbEmbedded.Name = "gbEmbedded";
+            this.gbEmbedded.Size = new System.Drawing.Size(494, 120);
+            this.gbEmbedded.TabIndex = 6;
+            this.gbEmbedded.TabStop = false;
+            this.gbEmbedded.Text = "Reference Information";
+            this.gbEmbedded.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // btn_LoadReference
             // 
@@ -293,6 +309,7 @@
             this.btn_LoadReference.TabIndex = 2;
             this.btn_LoadReference.Text = "Load Reference";
             this.btn_LoadReference.UseVisualStyleBackColor = true;
+            this.btn_LoadReference.Visible = false;
             this.btn_LoadReference.Click += new System.EventHandler(this.btn_LoadReference_Click);
             // 
             // lbl_PreviousMachine
@@ -413,6 +430,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Loading Status";
             // 
+            // lbl_Message
+            // 
+            this.lbl_Message.AutoSize = true;
+            this.lbl_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Message.ForeColor = System.Drawing.Color.Green;
+            this.lbl_Message.Location = new System.Drawing.Point(120, 67);
+            this.lbl_Message.Name = "lbl_Message";
+            this.lbl_Message.Size = new System.Drawing.Size(45, 16);
+            this.lbl_Message.TabIndex = 1;
+            this.lbl_Message.Text = "label2";
+            // 
             // lbl_LoadingDataMatrix
             // 
             this.lbl_LoadingDataMatrix.AutoSize = true;
@@ -423,6 +451,16 @@
             this.lbl_LoadingDataMatrix.Size = new System.Drawing.Size(45, 16);
             this.lbl_LoadingDataMatrix.TabIndex = 1;
             this.lbl_LoadingDataMatrix.Text = "label2";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(16, 67);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(65, 16);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Message";
             // 
             // lbl_LoadingStatus
             // 
@@ -647,15 +685,15 @@
             // lb_Indexer
             // 
             this.lb_Indexer.FormattingEnabled = true;
-            this.lb_Indexer.Location = new System.Drawing.Point(557, 160);
+            this.lb_Indexer.Location = new System.Drawing.Point(513, 165);
             this.lb_Indexer.Name = "lb_Indexer";
-            this.lb_Indexer.Size = new System.Drawing.Size(322, 95);
+            this.lb_Indexer.Size = new System.Drawing.Size(366, 95);
             this.lb_Indexer.TabIndex = 14;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(554, 144);
+            this.label14.Location = new System.Drawing.Point(513, 149);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(74, 13);
             this.label14.TabIndex = 8;
@@ -775,7 +813,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(554, 24);
+            this.label22.Location = new System.Drawing.Point(513, 26);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(97, 13);
             this.label22.TabIndex = 8;
@@ -786,7 +824,7 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Image = global::TraceabilityConnector.Properties.Resources.sch;
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(574, 263);
+            this.pictureBox1.Location = new System.Drawing.Point(563, 380);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(284, 87);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -799,41 +837,137 @@
             this.tmr_PlcRetry.Interval = 10000;
             this.tmr_PlcRetry.Tick += new System.EventHandler(this.tmr_PlcRetry_Tick);
             // 
-            // label15
+            // gb_Embedded
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(16, 67);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(65, 16);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Message";
+            this.gb_Embedded.Controls.Add(this.lbl_OrderNumber);
+            this.gb_Embedded.Controls.Add(this.label25);
+            this.gb_Embedded.Controls.Add(this.lbl_GenerateResult);
+            this.gb_Embedded.Controls.Add(this.label24);
+            this.gb_Embedded.Controls.Add(this.lbl_GeneratedDataMatrix);
+            this.gb_Embedded.Controls.Add(this.label26);
+            this.gb_Embedded.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gb_Embedded.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.gb_Embedded.Location = new System.Drawing.Point(12, 291);
+            this.gb_Embedded.Name = "gb_Embedded";
+            this.gb_Embedded.Size = new System.Drawing.Size(494, 195);
+            this.gb_Embedded.TabIndex = 16;
+            this.gb_Embedded.TabStop = false;
+            this.gb_Embedded.Text = "Datamatrix Generate";
+            this.gb_Embedded.Visible = false;
+            this.gb_Embedded.Enter += new System.EventHandler(this.gb_Embedded_Enter);
             // 
-            // lbl_Message
+            // lbl_OrderNumber
             // 
-            this.lbl_Message.AutoSize = true;
-            this.lbl_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Message.ForeColor = System.Drawing.Color.Green;
-            this.lbl_Message.Location = new System.Drawing.Point(120, 67);
-            this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(45, 16);
-            this.lbl_Message.TabIndex = 1;
-            this.lbl_Message.Text = "label2";
+            this.lbl_OrderNumber.AutoSize = true;
+            this.lbl_OrderNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_OrderNumber.ForeColor = System.Drawing.Color.Green;
+            this.lbl_OrderNumber.Location = new System.Drawing.Point(125, 38);
+            this.lbl_OrderNumber.Name = "lbl_OrderNumber";
+            this.lbl_OrderNumber.Size = new System.Drawing.Size(17, 16);
+            this.lbl_OrderNumber.TabIndex = 7;
+            this.lbl_OrderNumber.Text = "   ";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(19, 36);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(93, 16);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "Order Number";
+            // 
+            // lbl_GenerateResult
+            // 
+            this.lbl_GenerateResult.AutoSize = true;
+            this.lbl_GenerateResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_GenerateResult.ForeColor = System.Drawing.Color.Green;
+            this.lbl_GenerateResult.Location = new System.Drawing.Point(125, 90);
+            this.lbl_GenerateResult.Name = "lbl_GenerateResult";
+            this.lbl_GenerateResult.Size = new System.Drawing.Size(17, 16);
+            this.lbl_GenerateResult.TabIndex = 4;
+            this.lbl_GenerateResult.Text = "   ";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(19, 90);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(46, 16);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Result";
+            // 
+            // lbl_GeneratedDataMatrix
+            // 
+            this.lbl_GeneratedDataMatrix.AutoSize = true;
+            this.lbl_GeneratedDataMatrix.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_GeneratedDataMatrix.ForeColor = System.Drawing.Color.Green;
+            this.lbl_GeneratedDataMatrix.Location = new System.Drawing.Point(125, 64);
+            this.lbl_GeneratedDataMatrix.Name = "lbl_GeneratedDataMatrix";
+            this.lbl_GeneratedDataMatrix.Size = new System.Drawing.Size(17, 16);
+            this.lbl_GeneratedDataMatrix.TabIndex = 5;
+            this.lbl_GeneratedDataMatrix.Text = "   ";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(19, 62);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(75, 16);
+            this.label26.TabIndex = 3;
+            this.label26.Text = "Data Matrix";
+            // 
+            // btnAlarmClear
+            // 
+            this.btnAlarmClear.Location = new System.Drawing.Point(804, 16);
+            this.btnAlarmClear.Name = "btnAlarmClear";
+            this.btnAlarmClear.Size = new System.Drawing.Size(75, 23);
+            this.btnAlarmClear.TabIndex = 17;
+            this.btnAlarmClear.Text = "Clear";
+            this.btnAlarmClear.UseVisualStyleBackColor = true;
+            this.btnAlarmClear.Click += new System.EventHandler(this.btnAlarmClear_Click);
+            // 
+            // tmr_CLock
+            // 
+            this.tmr_CLock.Interval = 1000;
+            this.tmr_CLock.Tick += new System.EventHandler(this.tmr_CLock_Tick);
+            // 
+            // lbl_Clock
+            // 
+            this.lbl_Clock.AutoSize = true;
+            this.lbl_Clock.Location = new System.Drawing.Point(248, 4);
+            this.lbl_Clock.Name = "lbl_Clock";
+            this.lbl_Clock.Size = new System.Drawing.Size(0, 13);
+            this.lbl_Clock.TabIndex = 8;
+            // 
+            // myNotifyIcon
+            // 
+            this.myNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.myNotifyIcon.BalloonTipTitle = "Traceability";
+            this.myNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotifyIcon.Icon")));
+            this.myNotifyIcon.Text = "Traceability Connector";
+            this.myNotifyIcon.Visible = true;
+            this.myNotifyIcon.Click += new System.EventHandler(this.myNotifyIcon_Click);
             // 
             // TraceabilityConnector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 639);
+            this.Controls.Add(this.btnAlarmClear);
+            this.Controls.Add(this.gb_Embedded);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.gb_MachineSimulation);
             this.Controls.Add(this.lb_Indexer);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.lbl_Clock);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.gbEmbedded);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_Setting);
             this.Controls.Add(this.btn_Initialize);
@@ -847,8 +981,8 @@
             this.Resize += new System.EventHandler(this.TraceabilityConnector_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gbEmbedded.ResumeLayout(false);
+            this.gbEmbedded.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -858,6 +992,8 @@
             this.gb_MachineSimulation.ResumeLayout(false);
             this.gb_MachineSimulation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.gb_Embedded.ResumeLayout(false);
+            this.gb_Embedded.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -874,7 +1010,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbl_MachineCode;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbEmbedded;
         private System.Windows.Forms.Label lbl_Sequence;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lbl_Article;
@@ -931,6 +1067,17 @@
         private System.Windows.Forms.Timer tmr_PlcRetry;
         private System.Windows.Forms.Label lbl_Message;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.GroupBox gb_Embedded;
+        private System.Windows.Forms.Button btnAlarmClear;
+        private System.Windows.Forms.Label lbl_GenerateResult;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label lbl_GeneratedDataMatrix;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label lbl_OrderNumber;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Timer tmr_CLock;
+        private System.Windows.Forms.Label lbl_Clock;
+        private System.Windows.Forms.NotifyIcon myNotifyIcon;
     }
 }
 

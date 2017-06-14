@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HookSetting));
             this.label1 = new System.Windows.Forms.Label();
             this.tb_MachineSerialNumber = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -37,16 +38,16 @@
             this.btn_ReloadSetting = new System.Windows.Forms.Button();
             this.cb_EnableTraceability = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tb_DbConnectionString = new System.Windows.Forms.TextBox();
+            this.tb_AdminPassword = new System.Windows.Forms.TextBox();
             this.tb_PlcIpAddress = new System.Windows.Forms.TextBox();
             this.tb_UniqueIdentityLength = new System.Windows.Forms.TextBox();
             this.tb_NumberOfStation = new System.Windows.Forms.TextBox();
-            this.tb_AdminPassword = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,6 +156,15 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Database Connection String";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 218);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(85, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Admin Password";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -200,6 +210,15 @@
             this.tb_DbConnectionString.Size = new System.Drawing.Size(232, 58);
             this.tb_DbConnectionString.TabIndex = 1;
             // 
+            // tb_AdminPassword
+            // 
+            this.tb_AdminPassword.Location = new System.Drawing.Point(184, 216);
+            this.tb_AdminPassword.Name = "tb_AdminPassword";
+            this.tb_AdminPassword.PasswordChar = '.';
+            this.tb_AdminPassword.ReadOnly = true;
+            this.tb_AdminPassword.Size = new System.Drawing.Size(231, 20);
+            this.tb_AdminPassword.TabIndex = 1;
+            // 
             // tb_PlcIpAddress
             // 
             this.tb_PlcIpAddress.Location = new System.Drawing.Point(183, 190);
@@ -224,30 +243,13 @@
             this.tb_NumberOfStation.Size = new System.Drawing.Size(231, 20);
             this.tb_NumberOfStation.TabIndex = 1;
             // 
-            // tb_AdminPassword
-            // 
-            this.tb_AdminPassword.Location = new System.Drawing.Point(184, 216);
-            this.tb_AdminPassword.Name = "tb_AdminPassword";
-            this.tb_AdminPassword.PasswordChar = '.';
-            this.tb_AdminPassword.ReadOnly = true;
-            this.tb_AdminPassword.Size = new System.Drawing.Size(231, 20);
-            this.tb_AdminPassword.TabIndex = 1;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 218);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Admin Password";
-            // 
             // HookSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(445, 330);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HookSetting";
             this.Text = "Traceability Machine Setting";
             this.Load += new System.EventHandler(this.HookSetting_Load);

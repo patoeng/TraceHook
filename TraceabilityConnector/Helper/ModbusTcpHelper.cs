@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using System.Windows.Forms.VisualStyles;
 
 namespace TraceabilityConnector.Helper
 {
@@ -43,7 +42,7 @@ namespace TraceabilityConnector.Helper
             {
                 var j = i % 2;
                 if (j == 0)
-                    temp[i] = (i) == data.Length-1 && ganjil ? (byte) 0 : data[i + 1];
+                    temp[i] = i == data.Length-1 && ganjil ? (byte) 0 : data[i + 1];
                 else
                     temp[i] = data[i - 1];
             }
@@ -53,8 +52,12 @@ namespace TraceabilityConnector.Helper
         {
             var datas = ByteMachineShuffle(data);
             var result = Encoding.ASCII.GetString(datas);
-            result = result.Substring(0, result.IndexOf("\0", StringComparison.Ordinal));
-            return result;
+            var resultTrimed = result.Trim(' ');
+            var stringTerminationPos = resultTrimed.IndexOf("\0", StringComparison.Ordinal);
+            var result2 = "";
+            if (stringTerminationPos>0)
+              result2 = resultTrimed.Substring(0, stringTerminationPos);
+            return result2;
         }
 
         public static byte[] AsciiStringToByteArray(string data)
