@@ -109,6 +109,9 @@ namespace TraceabilityConnector
         }
 
         public event DataAcquisitionOnException DataAcquisitionOnException;
-       
+        public void SetUniqueIdentityLength(int length)
+        {
+            PlcCommand.SetUniqueIdentityLength(_plcMaster,length);
+        }
     }
 }

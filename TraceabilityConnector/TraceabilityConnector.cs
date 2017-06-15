@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Traceability.Hook;
 using Traceability.Hook.Models;
 using Traceability.Hook.Setting;
+using TraceabilityConnector.Helper;
 
 
 namespace TraceabilityConnector
@@ -25,6 +26,9 @@ namespace TraceabilityConnector
         private int _plcScanRate;
         private bool _enableVirtualIndexer;
         private bool _traceabilityEnabled;
+        private int _uniqueIdentityLength;
+        private string _databaseConnection;
+        private string _serverIp;
 
         public TraceabilityConnector(bool embeddedMode)
         {
@@ -51,7 +55,16 @@ namespace TraceabilityConnector
             _traceabilityEnabled = _setting.GetEnableTraceability();
             _plcScanRate = _setting.GetPlcScanRate();         
             _enableVirtualIndexer = _setting.GetVirtualIndexer();
-          
+            _uniqueIdentityLength = _setting.GetUniqueIdLength();
+            _databaseConnection = _setting.GetDatabaseConnectionString();
+
+            _serverIp = TestConnection.ParseIpAddress(_databaseConnection);
+            if (_serverIp != "")
+            {
+                tmrPingServer_Tick(tmrPingServer, null);
+                tmrPingServer.Start();
+            }
+            SetLabelText(lblServerIp,_serverIp);
 
             ScanTimerInitialize();
             DaqReInitialize();
@@ -66,12 +79,13 @@ namespace TraceabilityConnector
                 {                   
                     lbl_PlcConnection.Text = @"Connected";
                      if(!_enableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
+                    _dataAcquisition.SetUniqueIdentityLength(_uniqueIdentityLength);
                     _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.TraceabilityStatusNotUpdated);
                     _dataAcquisition.SetVirtualIndexer(
                         _enableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
                     
                    SetTraceabilityStates(_traceabilityEnabled? TraceabilityStates.WaitingForReference: TraceabilityStates.ByPassed);
-                    btn_ByPass.Text = _traceabilityEnabled ? "By Pass" : "Activate";
+                    btn_ByPass2.Text = _traceabilityEnabled ? "&By Pass" : "&Activate";
                    if (!_enableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
 
                     tmr_Scanner.Start();
@@ -526,10 +540,11 @@ namespace TraceabilityConnector
             return result;
         }
         private void PlcScanMapping(int[] data)
-        {  
+        {
+            _machineData.TraceabilityStates = (TraceabilityStates)data[3];
+            if (!_traceabilityEnabled) return;
             _machineData.ProductInLoadingStatus= (ProductStatus)data[1];
             _machineData.ProductInUnloadingStatus = (ProductStatus)data[2];
-            _machineData.TraceabilityStates = (TraceabilityStates) data[3];
             _machineData.VirtualIndexerStates=(VirtualIndexerStates)data[4];
         }
         #endregion
@@ -589,21 +604,7 @@ namespace TraceabilityConnector
        
      
 
-        private void btn_WriteToLoading_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.WriteProductInLoading(textBox5.Text);
-        }
-
-        private void btn_WriteToUnloading_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.WriteProductInUnloading(textBox1.Text);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.WriteActiveReference(textBox4.Text);            
-        }
-
+      
        
 
         #region Public Functions For Embedding to existing program
@@ -774,28 +775,13 @@ namespace TraceabilityConnector
             BringToFront();
         }
 
-        private int _count;     
+  
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            _count++;
-            if (_count > 3)
-            {
-                _count = 0;
-                gb_MachineSimulation.Visible = true;
-                pictureBox1.Hide();
-            }
-            else
-            {
-                gb_MachineSimulation.Visible = false;
-                pictureBox1.Show();
-            }
+           
         }
 
-        private void btn_Hide_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Show();
-            gb_MachineSimulation.Hide();
-        }
+       
 
         private void btn_ByPass_Click(object sender, EventArgs e)
         {
@@ -805,15 +791,15 @@ namespace TraceabilityConnector
                 form.ShowDialog();
                 if (form.LoginSuccessfull)
                 {
-                    if (btn_ByPass.Text.Equals("By Pass"))
+                    if (btn_ByPass2.Text.Equals("By Pass"))
                     {
                         ChangeTraceabilityState(true);
-                        btn_ByPass.Text = @"Activate";
+                        btn_ByPass2.Text = @"&Activate";
                     }
                     else
                     {
                         ChangeTraceabilityState(false);
-                        btn_ByPass.Text = @"By Pass";
+                        btn_ByPass2.Text = @"&By Pass";
                     }
                 }
             }
@@ -861,6 +847,51 @@ namespace TraceabilityConnector
         private void myNotifyIcon_Click(object sender, EventArgs e)
         {
             Show();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tmrPingServer_Tick(object sender, EventArgs e)
+        {
+            tmrPingServer.Stop();
+            var j = TestConnection.PingNow(_serverIp);
+            if (j)
+            {
+                LampBlink(chb_PingServerLamp);
+                SetLabelText(lblPingStatus, "OK");
+                if (sender.GetType() == typeof(Button))
+                {
+                    MessageBox.Show(@"Ping Successfull!",@"Ping Server",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+                }
+                _blinkCounter = 0;
+                tmr_Blink.Start();
+            }
+            else
+            {
+                if (sender.GetType() == typeof(Button))
+                {
+                    MessageBox.Show(@"Ping Failed! Check Database Connection String Setting, Network Connection, and  PC Server is running.", @"Ping Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                SetLabelText(lblPingStatus, "FAIL");
+            }
+            tmrPingServer.Start();
+        }
+
+        private int _blinkCounter;
+        private void tmr_Blink_Tick(object sender, EventArgs e)
+        {
+            tmr_Blink.Stop();
+            LampBlink(chb_PingServerLamp);
+            _blinkCounter++;
+            if (_blinkCounter<1) tmr_Blink.Start();
+        }
+
+        private void btnPingServer_Click(object sender, EventArgs e)
+        {
+            tmrPingServer_Tick(btnPingServer, null);
         }
     }
 }

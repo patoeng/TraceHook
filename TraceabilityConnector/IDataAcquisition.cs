@@ -15,7 +15,7 @@
         void UpdateProductInUnloadingStatus(ProductStatus productStatus);
         void SetTraceabilityStates(TraceabilityStates traceability);
         void SetVirtualIndexer(VirtualIndexerStates virtualIndexer);
-   
+        void SetUniqueIdentityLength(int length);
         event DataAcquisitionOnException DataAcquisitionOnException;
     }
 }

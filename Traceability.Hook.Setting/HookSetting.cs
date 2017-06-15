@@ -48,6 +48,7 @@ namespace Traceability.Hook.Setting
             tb_UniqueIdentityLength.ReadOnly = false;
             cb_EnableTraceability.Enabled = true;
             tb_PlcIpAddress.ReadOnly = false;
+            btn_Save.Visible = true;
         }
         private void MakeAllInputReadOnly()
         {
@@ -58,6 +59,7 @@ namespace Traceability.Hook.Setting
             tb_UniqueIdentityLength.ReadOnly = true;
             cb_EnableTraceability.Enabled = false;
             tb_PlcIpAddress.ReadOnly = true;
+            btn_Save.Visible = false;
         }
         private void btn_StartEdit_Click(object sender, EventArgs e)
         {
@@ -124,6 +126,7 @@ namespace Traceability.Hook.Setting
             if (bb)
             {
                 MessageBox.Show(@"Setting Saved Successfully!");
+                Close();
             }
         }
 

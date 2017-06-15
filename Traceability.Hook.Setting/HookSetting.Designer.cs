@@ -91,48 +91,49 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(445, 330);
+            this.groupBox1.Size = new System.Drawing.Size(445, 302);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Settings";
+            this.groupBox1.Text = " Settings ";
             // 
             // btn_Close
             // 
-            this.btn_Close.Location = new System.Drawing.Point(345, 267);
+            this.btn_Close.Location = new System.Drawing.Point(341, 243);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(75, 51);
-            this.btn_Close.TabIndex = 5;
-            this.btn_Close.Text = "Close";
+            this.btn_Close.TabIndex = 11;
+            this.btn_Close.Text = "&Close";
             this.btn_Close.UseVisualStyleBackColor = true;
             this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(264, 267);
+            this.btn_Save.Location = new System.Drawing.Point(260, 243);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(75, 51);
-            this.btn_Save.TabIndex = 5;
-            this.btn_Save.Text = "Save";
+            this.btn_Save.TabIndex = 10;
+            this.btn_Save.Text = "&Save";
             this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Visible = false;
             this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
             // btn_StartEdit
             // 
-            this.btn_StartEdit.Location = new System.Drawing.Point(183, 267);
+            this.btn_StartEdit.Location = new System.Drawing.Point(179, 243);
             this.btn_StartEdit.Name = "btn_StartEdit";
             this.btn_StartEdit.Size = new System.Drawing.Size(75, 51);
-            this.btn_StartEdit.TabIndex = 4;
-            this.btn_StartEdit.Text = "Start Edit";
+            this.btn_StartEdit.TabIndex = 9;
+            this.btn_StartEdit.Text = "St&art Edit";
             this.btn_StartEdit.UseVisualStyleBackColor = true;
             this.btn_StartEdit.Click += new System.EventHandler(this.btn_StartEdit_Click);
             // 
             // btn_ReloadSetting
             // 
-            this.btn_ReloadSetting.Location = new System.Drawing.Point(102, 267);
+            this.btn_ReloadSetting.Location = new System.Drawing.Point(98, 243);
             this.btn_ReloadSetting.Name = "btn_ReloadSetting";
             this.btn_ReloadSetting.Size = new System.Drawing.Size(75, 51);
-            this.btn_ReloadSetting.TabIndex = 3;
-            this.btn_ReloadSetting.Text = "Reload Setting";
+            this.btn_ReloadSetting.TabIndex = 8;
+            this.btn_ReloadSetting.Text = "&Reload Setting";
             this.btn_ReloadSetting.UseVisualStyleBackColor = true;
             this.btn_ReloadSetting.Click += new System.EventHandler(this.btn_ReloadSetting_Click);
             // 
@@ -143,8 +144,8 @@
             this.cb_EnableTraceability.Location = new System.Drawing.Point(183, 103);
             this.cb_EnableTraceability.Name = "cb_EnableTraceability";
             this.cb_EnableTraceability.Size = new System.Drawing.Size(59, 17);
-            this.cb_EnableTraceability.TabIndex = 2;
-            this.cb_EnableTraceability.Text = "Enable";
+            this.cb_EnableTraceability.TabIndex = 4;
+            this.cb_EnableTraceability.Text = "&Enable";
             this.cb_EnableTraceability.UseVisualStyleBackColor = true;
             // 
             // label5
@@ -208,7 +209,7 @@
             this.tb_DbConnectionString.Name = "tb_DbConnectionString";
             this.tb_DbConnectionString.ReadOnly = true;
             this.tb_DbConnectionString.Size = new System.Drawing.Size(232, 58);
-            this.tb_DbConnectionString.TabIndex = 1;
+            this.tb_DbConnectionString.TabIndex = 5;
             // 
             // tb_AdminPassword
             // 
@@ -217,7 +218,7 @@
             this.tb_AdminPassword.PasswordChar = '.';
             this.tb_AdminPassword.ReadOnly = true;
             this.tb_AdminPassword.Size = new System.Drawing.Size(231, 20);
-            this.tb_AdminPassword.TabIndex = 1;
+            this.tb_AdminPassword.TabIndex = 7;
             // 
             // tb_PlcIpAddress
             // 
@@ -225,7 +226,7 @@
             this.tb_PlcIpAddress.Name = "tb_PlcIpAddress";
             this.tb_PlcIpAddress.ReadOnly = true;
             this.tb_PlcIpAddress.Size = new System.Drawing.Size(231, 20);
-            this.tb_PlcIpAddress.TabIndex = 1;
+            this.tb_PlcIpAddress.TabIndex = 6;
             // 
             // tb_UniqueIdentityLength
             // 
@@ -233,7 +234,7 @@
             this.tb_UniqueIdentityLength.Name = "tb_UniqueIdentityLength";
             this.tb_UniqueIdentityLength.ReadOnly = true;
             this.tb_UniqueIdentityLength.Size = new System.Drawing.Size(231, 20);
-            this.tb_UniqueIdentityLength.TabIndex = 1;
+            this.tb_UniqueIdentityLength.TabIndex = 3;
             // 
             // tb_NumberOfStation
             // 
@@ -241,13 +242,13 @@
             this.tb_NumberOfStation.Name = "tb_NumberOfStation";
             this.tb_NumberOfStation.ReadOnly = true;
             this.tb_NumberOfStation.Size = new System.Drawing.Size(231, 20);
-            this.tb_NumberOfStation.TabIndex = 1;
+            this.tb_NumberOfStation.TabIndex = 2;
             // 
             // HookSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 330);
+            this.ClientSize = new System.Drawing.Size(445, 302);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HookSetting";

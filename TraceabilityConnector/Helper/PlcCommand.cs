@@ -83,6 +83,12 @@ namespace TraceabilityConnector.Helper
             if (master.connected)
                 master.WriteSingleRegister(4, 1, master.VirtualIndexerStartAddress, ModbusTcpHelper.WordArrayToByteArray(new[] { Convert.ToInt32(virtualIndexer) }, 1), ref dummy);
         }
-       
+        public static void SetUniqueIdentityLength(PlcMaster master, int length)
+        {
+            byte[] dummy = { };
+            if (master == null) return;
+            if (master.connected)
+                master.WriteSingleRegister(5, 1, master.UniqueIdentityLengthAddress, ModbusTcpHelper.WordArrayToByteArray(new[] { length }, 1), ref dummy);
+        }
     }
 }

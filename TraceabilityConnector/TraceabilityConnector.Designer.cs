@@ -55,8 +55,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lbl_Reference = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbl_Message = new System.Windows.Forms.Label();
             this.lbl_LoadingDataMatrix = new System.Windows.Forms.Label();
@@ -69,30 +67,17 @@
             this.lbl_UnloadingState = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.btn_WriteToLoading = new System.Windows.Forms.Button();
-            this.btn_WriteToUnloading = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btn_ByPass = new System.Windows.Forms.Button();
+            this.chb_PingServerLamp = new System.Windows.Forms.CheckBox();
             this.chb_ScanLamp = new System.Windows.Forms.CheckBox();
             this.lbl_VirtualIndexer = new System.Windows.Forms.Label();
             this.lbl_TraceabilityStates = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.lb_Indexer = new System.Windows.Forms.ListBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.gb_MachineSimulation = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btn_Hide = new System.Windows.Forms.Button();
-            this.btn_IndexTable = new System.Windows.Forms.Button();
-            this.btn_SetProcessNok = new System.Windows.Forms.Button();
-            this.btn_SetProcessOk = new System.Windows.Forms.Button();
-            this.btn_SetRequestCheck = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tmr_PlcRetry = new System.Windows.Forms.Timer(this.components);
@@ -107,14 +92,23 @@
             this.tmr_CLock = new System.Windows.Forms.Timer(this.components);
             this.lbl_Clock = new System.Windows.Forms.Label();
             this.myNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.tmrPingServer = new System.Windows.Forms.Timer(this.components);
+            this.tmr_Blink = new System.Windows.Forms.Timer(this.components);
+            this.btnPingServer = new System.Windows.Forms.Button();
+            this.btn_ByPass2 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblPingStatus = new System.Windows.Forms.Label();
+            this.lblServerIp = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.gbEmbedded.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.gb_MachineSimulation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gb_Embedded.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_Scanner
@@ -123,12 +117,12 @@
             // 
             // tb_ShowInformation
             // 
-            this.tb_ShowInformation.Location = new System.Drawing.Point(513, 45);
+            this.tb_ShowInformation.Location = new System.Drawing.Point(516, 291);
             this.tb_ShowInformation.Multiline = true;
             this.tb_ShowInformation.Name = "tb_ShowInformation";
             this.tb_ShowInformation.ReadOnly = true;
             this.tb_ShowInformation.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_ShowInformation.Size = new System.Drawing.Size(366, 101);
+            this.tb_ShowInformation.Size = new System.Drawing.Size(366, 336);
             this.tb_ShowInformation.TabIndex = 0;
             this.tb_ShowInformation.WordWrap = false;
             // 
@@ -138,7 +132,7 @@
             this.btn_Initialize.Name = "btn_Initialize";
             this.btn_Initialize.Size = new System.Drawing.Size(75, 42);
             this.btn_Initialize.TabIndex = 1;
-            this.btn_Initialize.Text = "Initialize";
+            this.btn_Initialize.Text = "&Initialize";
             this.btn_Initialize.UseVisualStyleBackColor = true;
             this.btn_Initialize.Click += new System.EventHandler(this.btn_Initialize_Click);
             // 
@@ -148,7 +142,7 @@
             this.btn_Setting.Name = "btn_Setting";
             this.btn_Setting.Size = new System.Drawing.Size(75, 42);
             this.btn_Setting.TabIndex = 2;
-            this.btn_Setting.Text = "Setting";
+            this.btn_Setting.Text = "&Setting";
             this.btn_Setting.UseVisualStyleBackColor = true;
             this.btn_Setting.Click += new System.EventHandler(this.btn_Setting_Click);
             // 
@@ -396,23 +390,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Reference";
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(88, 31);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(103, 20);
-            this.textBox4.TabIndex = 7;
-            this.textBox4.Text = "CAD503P7";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Reference";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lbl_Message);
@@ -437,9 +414,8 @@
             this.lbl_Message.ForeColor = System.Drawing.Color.Green;
             this.lbl_Message.Location = new System.Drawing.Point(120, 67);
             this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(45, 16);
+            this.lbl_Message.Size = new System.Drawing.Size(0, 16);
             this.lbl_Message.TabIndex = 1;
-            this.lbl_Message.Text = "label2";
             // 
             // lbl_LoadingDataMatrix
             // 
@@ -550,40 +526,13 @@
             this.label20.TabIndex = 0;
             this.label20.Text = "State";
             // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(17, 81);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(274, 20);
-            this.textBox5.TabIndex = 11;
-            this.textBox5.Text = "338911081993CAD503P700002";
-            // 
-            // btn_WriteToLoading
-            // 
-            this.btn_WriteToLoading.Location = new System.Drawing.Point(17, 107);
-            this.btn_WriteToLoading.Name = "btn_WriteToLoading";
-            this.btn_WriteToLoading.Size = new System.Drawing.Size(124, 23);
-            this.btn_WriteToLoading.TabIndex = 12;
-            this.btn_WriteToLoading.Text = "WriteToLoading";
-            this.btn_WriteToLoading.UseVisualStyleBackColor = true;
-            this.btn_WriteToLoading.Click += new System.EventHandler(this.btn_WriteToLoading_Click);
-            // 
-            // btn_WriteToUnloading
-            // 
-            this.btn_WriteToUnloading.Location = new System.Drawing.Point(17, 230);
-            this.btn_WriteToUnloading.Name = "btn_WriteToUnloading";
-            this.btn_WriteToUnloading.Size = new System.Drawing.Size(130, 23);
-            this.btn_WriteToUnloading.TabIndex = 13;
-            this.btn_WriteToUnloading.Text = "WriteToUnloading";
-            this.btn_WriteToUnloading.UseVisualStyleBackColor = true;
-            this.btn_WriteToUnloading.Click += new System.EventHandler(this.btn_WriteToUnloading_Click);
-            // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.btn_ByPass);
+            this.groupBox5.Controls.Add(this.chb_PingServerLamp);
             this.groupBox5.Controls.Add(this.chb_ScanLamp);
             this.groupBox5.Controls.Add(this.lbl_VirtualIndexer);
             this.groupBox5.Controls.Add(this.lbl_TraceabilityStates);
+            this.groupBox5.Controls.Add(this.label23);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Controls.Add(this.label17);
@@ -596,16 +545,19 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Traceability Status";
             // 
-            // btn_ByPass
+            // chb_PingServerLamp
             // 
-            this.btn_ByPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ByPass.Location = new System.Drawing.Point(402, 59);
-            this.btn_ByPass.Name = "btn_ByPass";
-            this.btn_ByPass.Size = new System.Drawing.Size(68, 23);
-            this.btn_ByPass.TabIndex = 2;
-            this.btn_ByPass.Text = "By Pass";
-            this.btn_ByPass.UseVisualStyleBackColor = true;
-            this.btn_ByPass.Click += new System.EventHandler(this.btn_ByPass_Click);
+            this.chb_PingServerLamp.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chb_PingServerLamp.AutoSize = true;
+            this.chb_PingServerLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chb_PingServerLamp.Font = new System.Drawing.Font("Monotype Corsiva", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chb_PingServerLamp.Location = new System.Drawing.Point(467, 15);
+            this.chb_PingServerLamp.Name = "chb_PingServerLamp";
+            this.chb_PingServerLamp.Size = new System.Drawing.Size(19, 23);
+            this.chb_PingServerLamp.TabIndex = 2;
+            this.chb_PingServerLamp.Text = " ";
+            this.chb_PingServerLamp.UseVisualStyleBackColor = true;
+            this.chb_PingServerLamp.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // chb_ScanLamp
             // 
@@ -613,7 +565,7 @@
             this.chb_ScanLamp.AutoSize = true;
             this.chb_ScanLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chb_ScanLamp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chb_ScanLamp.Location = new System.Drawing.Point(450, 22);
+            this.chb_ScanLamp.Location = new System.Drawing.Point(466, 44);
             this.chb_ScanLamp.Name = "chb_ScanLamp";
             this.chb_ScanLamp.Size = new System.Drawing.Size(20, 23);
             this.chb_ScanLamp.TabIndex = 2;
@@ -642,6 +594,16 @@
             this.lbl_TraceabilityStates.TabIndex = 1;
             this.lbl_TraceabilityStates.Text = "label2";
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(397, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(64, 16);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "SERVER";
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -656,11 +618,11 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(379, 25);
+            this.label12.Location = new System.Drawing.Point(428, 44);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 16);
+            this.label12.Size = new System.Drawing.Size(33, 16);
             this.label12.TabIndex = 0;
-            this.label12.Text = "Scanner";
+            this.label12.Text = "PLC";
             // 
             // label17
             // 
@@ -671,16 +633,6 @@
             this.label17.Size = new System.Drawing.Size(39, 16);
             this.label17.TabIndex = 0;
             this.label17.Text = "State";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(203, 29);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Change";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lb_Indexer
             // 
@@ -699,121 +651,10 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "Virtual Indexer";
             // 
-            // gb_MachineSimulation
-            // 
-            this.gb_MachineSimulation.Controls.Add(this.button2);
-            this.gb_MachineSimulation.Controls.Add(this.btn_Hide);
-            this.gb_MachineSimulation.Controls.Add(this.btn_IndexTable);
-            this.gb_MachineSimulation.Controls.Add(this.btn_SetProcessNok);
-            this.gb_MachineSimulation.Controls.Add(this.btn_SetProcessOk);
-            this.gb_MachineSimulation.Controls.Add(this.btn_SetRequestCheck);
-            this.gb_MachineSimulation.Controls.Add(this.textBox4);
-            this.gb_MachineSimulation.Controls.Add(this.label21);
-            this.gb_MachineSimulation.Controls.Add(this.label18);
-            this.gb_MachineSimulation.Controls.Add(this.label6);
-            this.gb_MachineSimulation.Controls.Add(this.btn_WriteToUnloading);
-            this.gb_MachineSimulation.Controls.Add(this.button1);
-            this.gb_MachineSimulation.Controls.Add(this.textBox1);
-            this.gb_MachineSimulation.Controls.Add(this.btn_WriteToLoading);
-            this.gb_MachineSimulation.Controls.Add(this.textBox5);
-            this.gb_MachineSimulation.Location = new System.Drawing.Point(557, 291);
-            this.gb_MachineSimulation.Name = "gb_MachineSimulation";
-            this.gb_MachineSimulation.Size = new System.Drawing.Size(322, 344);
-            this.gb_MachineSimulation.TabIndex = 15;
-            this.gb_MachineSimulation.TabStop = false;
-            this.gb_MachineSimulation.Text = "Machine Simulation";
-            this.gb_MachineSimulation.Visible = false;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(203, 137);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btn_Hide
-            // 
-            this.btn_Hide.Location = new System.Drawing.Point(241, 312);
-            this.btn_Hide.Name = "btn_Hide";
-            this.btn_Hide.Size = new System.Drawing.Size(75, 23);
-            this.btn_Hide.TabIndex = 18;
-            this.btn_Hide.Text = "Hide";
-            this.btn_Hide.UseVisualStyleBackColor = true;
-            this.btn_Hide.Click += new System.EventHandler(this.btn_Hide_Click);
-            // 
-            // btn_IndexTable
-            // 
-            this.btn_IndexTable.Location = new System.Drawing.Point(17, 289);
-            this.btn_IndexTable.Name = "btn_IndexTable";
-            this.btn_IndexTable.Size = new System.Drawing.Size(130, 23);
-            this.btn_IndexTable.TabIndex = 17;
-            this.btn_IndexTable.Text = "Index Table";
-            this.btn_IndexTable.UseVisualStyleBackColor = true;
-            this.btn_IndexTable.Click += new System.EventHandler(this.btn_IndexTable_Click);
-            // 
-            // btn_SetProcessNok
-            // 
-            this.btn_SetProcessNok.Location = new System.Drawing.Point(154, 260);
-            this.btn_SetProcessNok.Name = "btn_SetProcessNok";
-            this.btn_SetProcessNok.Size = new System.Drawing.Size(117, 23);
-            this.btn_SetProcessNok.TabIndex = 16;
-            this.btn_SetProcessNok.Text = "Process Result NOk";
-            this.btn_SetProcessNok.UseVisualStyleBackColor = true;
-            this.btn_SetProcessNok.Click += new System.EventHandler(this.btn_SetProcessNok_Click);
-            // 
-            // btn_SetProcessOk
-            // 
-            this.btn_SetProcessOk.Location = new System.Drawing.Point(17, 260);
-            this.btn_SetProcessOk.Name = "btn_SetProcessOk";
-            this.btn_SetProcessOk.Size = new System.Drawing.Size(130, 23);
-            this.btn_SetProcessOk.TabIndex = 15;
-            this.btn_SetProcessOk.Text = "Process Result Ok";
-            this.btn_SetProcessOk.UseVisualStyleBackColor = true;
-            this.btn_SetProcessOk.Click += new System.EventHandler(this.btn_SetProcessOk_Click);
-            // 
-            // btn_SetRequestCheck
-            // 
-            this.btn_SetRequestCheck.Location = new System.Drawing.Point(17, 137);
-            this.btn_SetRequestCheck.Name = "btn_SetRequestCheck";
-            this.btn_SetRequestCheck.Size = new System.Drawing.Size(174, 23);
-            this.btn_SetRequestCheck.TabIndex = 14;
-            this.btn_SetRequestCheck.Text = "Request Traceability Check";
-            this.btn_SetRequestCheck.UseVisualStyleBackColor = true;
-            this.btn_SetRequestCheck.Click += new System.EventHandler(this.btn_SetRequestCheck_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(14, 182);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(61, 13);
-            this.label21.TabIndex = 8;
-            this.label21.Text = "Data Matrix";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 62);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(61, 13);
-            this.label18.TabIndex = 8;
-            this.label18.Text = "Data Matrix";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(17, 201);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(274, 20);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "338911081993CAD503P700002";
-            // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(513, 26);
+            this.label22.Location = new System.Drawing.Point(513, 270);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(97, 13);
             this.label22.TabIndex = 8;
@@ -824,9 +665,9 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Image = global::TraceabilityConnector.Properties.Resources.sch;
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(563, 380);
+            this.pictureBox1.Location = new System.Drawing.Point(793, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(284, 87);
+            this.pictureBox1.Size = new System.Drawing.Size(102, 40);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -921,11 +762,11 @@
             // 
             // btnAlarmClear
             // 
-            this.btnAlarmClear.Location = new System.Drawing.Point(804, 16);
+            this.btnAlarmClear.Location = new System.Drawing.Point(804, 279);
             this.btnAlarmClear.Name = "btnAlarmClear";
             this.btnAlarmClear.Size = new System.Drawing.Size(75, 23);
             this.btnAlarmClear.TabIndex = 17;
-            this.btnAlarmClear.Text = "Clear";
+            this.btnAlarmClear.Text = "&Clear";
             this.btnAlarmClear.UseVisualStyleBackColor = true;
             this.btnAlarmClear.Click += new System.EventHandler(this.btnAlarmClear_Click);
             // 
@@ -951,15 +792,105 @@
             this.myNotifyIcon.Visible = true;
             this.myNotifyIcon.Click += new System.EventHandler(this.myNotifyIcon_Click);
             // 
+            // tmrPingServer
+            // 
+            this.tmrPingServer.Interval = 15000;
+            this.tmrPingServer.Tick += new System.EventHandler(this.tmrPingServer_Tick);
+            // 
+            // tmr_Blink
+            // 
+            this.tmr_Blink.Interval = 1000;
+            this.tmr_Blink.Tick += new System.EventHandler(this.tmr_Blink_Tick);
+            // 
+            // btnPingServer
+            // 
+            this.btnPingServer.Location = new System.Drawing.Point(256, 593);
+            this.btnPingServer.Name = "btnPingServer";
+            this.btnPingServer.Size = new System.Drawing.Size(75, 42);
+            this.btnPingServer.TabIndex = 19;
+            this.btnPingServer.Text = "&Ping Server";
+            this.btnPingServer.UseVisualStyleBackColor = true;
+            this.btnPingServer.Click += new System.EventHandler(this.btnPingServer_Click);
+            // 
+            // btn_ByPass2
+            // 
+            this.btn_ByPass2.Location = new System.Drawing.Point(173, 593);
+            this.btn_ByPass2.Name = "btn_ByPass2";
+            this.btn_ByPass2.Size = new System.Drawing.Size(75, 42);
+            this.btn_ByPass2.TabIndex = 20;
+            this.btn_ByPass2.Text = "&By Pass";
+            this.btn_ByPass2.UseVisualStyleBackColor = true;
+            this.btn_ByPass2.Click += new System.EventHandler(this.btn_ByPass_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.lblPingStatus);
+            this.groupBox2.Controls.Add(this.lblServerIp);
+            this.groupBox2.Controls.Add(this.label27);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.groupBox2.Location = new System.Drawing.Point(513, 50);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(353, 96);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Server";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(17, 55);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 16);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Ping";
+            // 
+            // lblPingStatus
+            // 
+            this.lblPingStatus.AutoSize = true;
+            this.lblPingStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPingStatus.ForeColor = System.Drawing.Color.Green;
+            this.lblPingStatus.Location = new System.Drawing.Point(83, 55);
+            this.lblPingStatus.Name = "lblPingStatus";
+            this.lblPingStatus.Size = new System.Drawing.Size(45, 16);
+            this.lblPingStatus.TabIndex = 1;
+            this.lblPingStatus.Text = "label2";
+            // 
+            // lblServerIp
+            // 
+            this.lblServerIp.AutoSize = true;
+            this.lblServerIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServerIp.ForeColor = System.Drawing.Color.Green;
+            this.lblServerIp.Location = new System.Drawing.Point(83, 32);
+            this.lblServerIp.Name = "lblServerIp";
+            this.lblServerIp.Size = new System.Drawing.Size(45, 16);
+            this.lblServerIp.TabIndex = 1;
+            this.lblServerIp.Text = "label2";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(17, 32);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(48, 16);
+            this.label27.TabIndex = 0;
+            this.label27.Text = "Server";
+            // 
             // TraceabilityConnector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 639);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.btn_ByPass2);
+            this.Controls.Add(this.btnPingServer);
             this.Controls.Add(this.btnAlarmClear);
             this.Controls.Add(this.gb_Embedded);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.gb_MachineSimulation);
             this.Controls.Add(this.lb_Indexer);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -989,11 +920,11 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.gb_MachineSimulation.ResumeLayout(false);
-            this.gb_MachineSimulation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.gb_Embedded.ResumeLayout(false);
             this.gb_Embedded.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1017,8 +948,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lbl_Reference;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_MachineFamily;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbl_PreviousMachine;
@@ -1033,9 +962,6 @@
         private System.Windows.Forms.Label lbl_UnloadingState;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button btn_WriteToLoading;
-        private System.Windows.Forms.Button btn_WriteToUnloading;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lbl_plcIpAddress;
         private System.Windows.Forms.Label label10;
@@ -1045,25 +971,13 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox chb_ScanLamp;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox lb_Indexer;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lbl_VirtualIndexer;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button btn_LoadReference;
-        private System.Windows.Forms.GroupBox gb_MachineSimulation;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btn_SetRequestCheck;
-        private System.Windows.Forms.Button btn_SetProcessNok;
-        private System.Windows.Forms.Button btn_SetProcessOk;
-        private System.Windows.Forms.Button btn_IndexTable;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btn_Hide;
-        private System.Windows.Forms.Button btn_ByPass;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Timer tmr_PlcRetry;
         private System.Windows.Forms.Label lbl_Message;
         private System.Windows.Forms.Label label15;
@@ -1078,6 +992,17 @@
         private System.Windows.Forms.Timer tmr_CLock;
         private System.Windows.Forms.Label lbl_Clock;
         private System.Windows.Forms.NotifyIcon myNotifyIcon;
+        private System.Windows.Forms.Timer tmrPingServer;
+        private System.Windows.Forms.CheckBox chb_PingServerLamp;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Timer tmr_Blink;
+        private System.Windows.Forms.Button btnPingServer;
+        private System.Windows.Forms.Button btn_ByPass2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblPingStatus;
+        private System.Windows.Forms.Label lblServerIp;
+        private System.Windows.Forms.Label label27;
     }
 }
 

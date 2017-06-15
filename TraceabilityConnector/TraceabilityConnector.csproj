@@ -59,6 +59,7 @@
     <Compile Include="Helper\ArrayFunctions.cs" />
     <Compile Include="Helper\ModbusTcpHelper.cs" />
     <Compile Include="Helper\PlcCommand.cs" />
+    <Compile Include="Helper\TestConnection.cs" />
     <Compile Include="IDataAcquisition.cs" />
     <Compile Include="MachineData.cs" />
     <Compile Include="PlcDataAcquisition.cs" />

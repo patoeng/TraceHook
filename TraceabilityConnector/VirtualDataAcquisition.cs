@@ -84,6 +84,9 @@ namespace TraceabilityConnector
         }
 
         public event DataAcquisitionOnException DataAcquisitionOnException;
-       
+        public void SetUniqueIdentityLength(int length)
+        {
+            _memory[PlcScanStartAddress] = Convert.ToByte(length);
+        }
     }
 }
