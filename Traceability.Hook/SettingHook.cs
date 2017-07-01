@@ -15,6 +15,7 @@ namespace Traceability.Hook
             {
                 _salt = "anoman obong";
                  _appConfiguration = ConfigurationManager.OpenExeConfiguration(LibraryLocation());
+    
             }
 
             [DispId(1)]

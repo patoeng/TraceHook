@@ -75,7 +75,7 @@ namespace Traceability.Hook
          }
          var parameters = new[]
          {
-             new SqlParameter("@productFullName", SqlDbType.NVarChar, 20) {SqlValue = productFullName }
+             new SqlParameter("@productFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName }
          };
          try
          {
@@ -136,7 +136,7 @@ namespace Traceability.Hook
         };
         var parameters = new[]
         {
-            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullname},
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullname},
             new SqlParameter("@Reference", SqlDbType.NVarChar, 20) {SqlValue = parsed.ReferencePart},
             new SqlParameter("@Remarks", SqlDbType.NVarChar, 20) {SqlValue = remarks},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
@@ -189,7 +189,7 @@ namespace Traceability.Hook
             };
             var parameters = new[]
             {
-            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName},
             new SqlParameter("@Reference", SqlDbType.NVarChar, 20) {SqlValue = parsed.ReferencePart},
             new SqlParameter("@Remarks", SqlDbType.NVarChar, 20) {SqlValue = remarks},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
@@ -241,7 +241,7 @@ namespace Traceability.Hook
             };
             var parameters = new[]
             {
-            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName},
             new SqlParameter("@Reference", SqlDbType.NVarChar, 20) {SqlValue = parsed.ReferencePart},
             new SqlParameter("@Remarks", SqlDbType.NVarChar, 20) {SqlValue = remarks},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
@@ -285,7 +285,7 @@ namespace Traceability.Hook
             };
             var parameters = new[]
             {
-            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName},
             new SqlParameter("@Remarks", SqlDbType.NVarChar, 20) {SqlValue = remarks},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
             result
@@ -376,11 +376,11 @@ namespace Traceability.Hook
             };
             var parameters = new[]
             {
-             new SqlParameter("@productFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
-             new SqlParameter("@reference", SqlDbType.NVarChar, 20) {SqlValue = parsed.ReferencePart},
+             new SqlParameter("@productFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName},
+             new SqlParameter("@reference", SqlDbType.NVarChar, 30) {SqlValue = parsed.ReferencePart},
              new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
              new SqlParameter("@workOrderId",SqlDbType.Int) {SqlValue = _thisMachineWorkorder.Id},
-             new SqlParameter("@Remarks",SqlDbType.NVarChar,20) {SqlValue = remarks},
+             new SqlParameter("@Remarks",SqlDbType.NVarChar,50) {SqlValue = remarks},
              new SqlParameter("@SequenceItemId",SqlDbType.Int) {SqlValue = _thisMachineSequenceItem.Id},
              new SqlParameter("@ProcessResult",SqlDbType.Int) {SqlValue = ProcessResult.Generated},
              result
@@ -557,7 +557,7 @@ namespace Traceability.Hook
      {
           productId = -1;
          _thisMachineReference = new Product();
-                     
+            reference = reference.Trim();
             var check = CheckIfInitialized();
             if (!check)
             {
@@ -570,7 +570,7 @@ namespace Traceability.Hook
 
             var parameters = new[]
             {
-             new SqlParameter("@reference", SqlDbType.NVarChar, 20) {SqlValue = reference},           
+             new SqlParameter("@reference", SqlDbType.NVarChar, 30) {SqlValue = reference},           
              result
             };
          try
@@ -762,7 +762,7 @@ namespace Traceability.Hook
             }
             var parameters = new[]
             {
-             new SqlParameter("@productFullName", SqlDbType.NVarChar, 40) {SqlValue = productFullName }
+             new SqlParameter("@productFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName }
          };
             try
             {
@@ -815,7 +815,7 @@ namespace Traceability.Hook
             };
             var parameters = new[]
             {
-            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 30) {SqlValue = productFullName},
+            new SqlParameter("@ProductFullName", SqlDbType.NVarChar, 50) {SqlValue = productFullName},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
             result
         };

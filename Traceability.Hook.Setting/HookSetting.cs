@@ -134,5 +134,10 @@ namespace Traceability.Hook.Setting
         {
             ReloadSetting();
         }
+
+        private void HookSetting_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _setting = null;
+        }
     }
 }

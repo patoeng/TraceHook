@@ -668,7 +668,12 @@ namespace TraceabilityConnector
             int productId;
             if (!_traceabilityEnabled) return false;
             var result = _thisMachine.LoadReferenceCheck(reference, out productId );
-            if (!result) return false;
+            if (!result)
+            {
+                ShowInformation("Failed Reference check : "+reference+".");
+                return false;
+            }
+
             _machineData.ActiveReference = reference;
             int status;
             var result2 = _thisMachine.CreateWorkOrderIfNotExisted(workOrderNumber, productId, target, out status);
@@ -702,25 +707,7 @@ namespace TraceabilityConnector
             if (_machineData != null) _machineData.ActiveReference = ReadActiveReference();
         }
 
-        private void btn_SetRequestCheck_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.LoadedNeedTraceabilityCheck);
-        }
-
-        private void btn_SetProcessOk_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateOk);
-        }
-
-        private void btn_SetProcessNok_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk);
-        }
-
-        private void btn_IndexTable_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.NewlyIndexed);
-        }
+      
 
         private void TraceabilityConnector_FormClosing_1(object sender, FormClosingEventArgs e)
         {
@@ -731,10 +718,11 @@ namespace TraceabilityConnector
                 if (r == DialogResult.OK)
                 {
                     e.Cancel = false;
+                    myNotifyIcon.Visible = false;
                 }
                 return;
             }
-            if (e.CloseReason != CloseReason.UserClosing && e.CloseReason != CloseReason.None || !EmbeddedMode)
+            if ((e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.None) && EmbeddedMode)
             {
                 e.Cancel = true;
                 Hide();
@@ -743,7 +731,7 @@ namespace TraceabilityConnector
 
         private void TraceabilityConnector_Resize(object sender, EventArgs e)
         {
-            if (EmbeddedMode)
+            if (!EmbeddedMode)
             {
                 if (FormWindowState.Minimized == this.WindowState)
                 {
@@ -755,6 +743,7 @@ namespace TraceabilityConnector
                 else if (FormWindowState.Normal == this.WindowState)
                 {
                     myNotifyIcon.Visible = false;
+                    Show();
                 }
             }
             else
@@ -768,10 +757,10 @@ namespace TraceabilityConnector
 
 
         private void TraceabilityConnector_VisibleChanged(object sender, EventArgs e)
-        {
-            if (!EmbeddedMode) return;
+        {         
             if (!Visible) return;
             WindowState = FormWindowState.Normal;
+            Show();
             BringToFront();
         }
 
@@ -791,7 +780,7 @@ namespace TraceabilityConnector
                 form.ShowDialog();
                 if (form.LoginSuccessfull)
                 {
-                    if (btn_ByPass2.Text.Equals("By Pass"))
+                    if (btn_ByPass2.Text.Equals("&By Pass"))
                     {
                         ChangeTraceabilityState(true);
                         btn_ByPass2.Text = @"&Activate";
@@ -810,13 +799,11 @@ namespace TraceabilityConnector
         {
             _dataAcquisition.SetTraceabilityStates(traceability? TraceabilityStates.ByPassed : TraceabilityStates.WaitingForReference);
             _setting.SetEnableTraceability(!traceability);
+          
             _traceabilityEnabled = !traceability;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            _dataAcquisition.UpdateProductInLoadingStatus(ProductStatus.Unknown);
-        }
+        
 
         private void tmr_PlcRetry_Tick(object sender, EventArgs e)
         {

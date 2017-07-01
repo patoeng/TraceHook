@@ -253,6 +253,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HookSetting";
             this.Text = "Traceability Machine Setting";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HookSetting_FormClosing);
             this.Load += new System.EventHandler(this.HookSetting_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

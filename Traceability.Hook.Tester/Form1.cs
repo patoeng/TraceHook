@@ -55,8 +55,8 @@ namespace Traceability.Hook.Tester
         private void button3_Click(object sender, EventArgs e)
         {
             int error;
-            _machineHook.LoadReference(textBox4.Text,out error);
-            
+            _machineHook.LoadReferenceCheck(textBox4.Text+"\r\n",out error);
+            textBox2.Text = error.ToString();
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
