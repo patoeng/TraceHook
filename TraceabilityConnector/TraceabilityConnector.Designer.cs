@@ -786,6 +786,7 @@
             // myNotifyIcon
             // 
             this.myNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.myNotifyIcon.BalloonTipText = "Traceability has been minimized";
             this.myNotifyIcon.BalloonTipTitle = "Traceability";
             this.myNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotifyIcon.Icon")));
             this.myNotifyIcon.Text = "Traceability Connector";
