@@ -127,10 +127,10 @@ namespace Traceability.Hook
         ParseProductFullName(productFullname, out parsed);
         if (parsed.ReferencePart != _thisMachineReference.Reference)
         {
-            MachineHookErrorOccured?.Invoke("Reference Not Matched");
-            return false;
+               MachineHookErrorOccured?.Invoke("Reference Not Matched");
+               return false;
         }
-        var result = new SqlParameter("@result", SqlDbType.Int)
+            var result = new SqlParameter("@result", SqlDbType.Int)
         {
             Direction = ParameterDirection.Output
         };
@@ -140,7 +140,7 @@ namespace Traceability.Hook
             new SqlParameter("@Reference", SqlDbType.NVarChar, 20) {SqlValue = parsed.ReferencePart},
             new SqlParameter("@Remarks", SqlDbType.NVarChar, 20) {SqlValue = remarks},
             new SqlParameter("@machineId", SqlDbType.Int) {SqlValue = _thisMachine.Id},
-            new SqlParameter("@SequenceId",SqlDbType.Int) {SqlValue = _thisMachineReference.SequenceId},
+            new SqlParameter("@SequenceId",SqlDbType.Int) {SqlValue = _thisMachineReference.SequenceId}, 
             new SqlParameter("@SequenceItemId",SqlDbType.Int) {SqlValue = _thisMachineSequenceItem.Id},
             new SqlParameter("@ProductId",SqlDbType.Int) {SqlValue = _thisMachineReference.Id},
             new SqlParameter("@MachineFamilyId",SqlDbType.Int) {SqlValue = _thisMachine.MachineFamilyId},
@@ -451,6 +451,13 @@ namespace Traceability.Hook
          reference.ArticlePart = productFullname.Substring(0, 12);
          reference.ReferencePart = productFullname.Substring(12, length - _uniqueIdLength - 12);
          reference.UniqueIdPart = productFullname.Substring(length - _uniqueIdLength - 1, _uniqueIdLength);
+         
+         // checkk for LV code
+         var uniqueId = reference.UniqueIdPart;
+         if (uniqueId.Length >= 6 && _uniqueIdLength <= 11)
+         {
+                if (uniqueId[6]==1) reference.ReferencePart  += "LV";
+         }
          return true;
      }
 

@@ -101,6 +101,7 @@
             this.lblPingStatus = new System.Windows.Forms.Label();
             this.lblServerIp = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
+            this.lblBuild = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.gbEmbedded.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -424,9 +425,8 @@
             this.lbl_LoadingDataMatrix.ForeColor = System.Drawing.Color.Green;
             this.lbl_LoadingDataMatrix.Location = new System.Drawing.Point(121, 45);
             this.lbl_LoadingDataMatrix.Name = "lbl_LoadingDataMatrix";
-            this.lbl_LoadingDataMatrix.Size = new System.Drawing.Size(45, 16);
+            this.lbl_LoadingDataMatrix.Size = new System.Drawing.Size(0, 16);
             this.lbl_LoadingDataMatrix.TabIndex = 1;
-            this.lbl_LoadingDataMatrix.Text = "label2";
             // 
             // label15
             // 
@@ -437,6 +437,7 @@
             this.label15.Size = new System.Drawing.Size(65, 16);
             this.label15.TabIndex = 0;
             this.label15.Text = "Message";
+            this.label15.Visible = false;
             // 
             // lbl_LoadingStatus
             // 
@@ -445,9 +446,8 @@
             this.lbl_LoadingStatus.ForeColor = System.Drawing.Color.Green;
             this.lbl_LoadingStatus.Location = new System.Drawing.Point(121, 25);
             this.lbl_LoadingStatus.Name = "lbl_LoadingStatus";
-            this.lbl_LoadingStatus.Size = new System.Drawing.Size(45, 16);
+            this.lbl_LoadingStatus.Size = new System.Drawing.Size(0, 16);
             this.lbl_LoadingStatus.TabIndex = 1;
-            this.lbl_LoadingStatus.Text = "label2";
             // 
             // label11
             // 
@@ -491,9 +491,8 @@
             this.lbl_UnloadingDataMatrix.ForeColor = System.Drawing.Color.Green;
             this.lbl_UnloadingDataMatrix.Location = new System.Drawing.Point(121, 45);
             this.lbl_UnloadingDataMatrix.Name = "lbl_UnloadingDataMatrix";
-            this.lbl_UnloadingDataMatrix.Size = new System.Drawing.Size(45, 16);
+            this.lbl_UnloadingDataMatrix.Size = new System.Drawing.Size(0, 16);
             this.lbl_UnloadingDataMatrix.TabIndex = 1;
-            this.lbl_UnloadingDataMatrix.Text = "label2";
             // 
             // lbl_UnloadingState
             // 
@@ -502,9 +501,8 @@
             this.lbl_UnloadingState.ForeColor = System.Drawing.Color.Green;
             this.lbl_UnloadingState.Location = new System.Drawing.Point(121, 25);
             this.lbl_UnloadingState.Name = "lbl_UnloadingState";
-            this.lbl_UnloadingState.Size = new System.Drawing.Size(45, 16);
+            this.lbl_UnloadingState.Size = new System.Drawing.Size(0, 16);
             this.lbl_UnloadingState.TabIndex = 1;
-            this.lbl_UnloadingState.Text = "label2";
             // 
             // label19
             // 
@@ -579,9 +577,8 @@
             this.lbl_VirtualIndexer.ForeColor = System.Drawing.Color.Green;
             this.lbl_VirtualIndexer.Location = new System.Drawing.Point(120, 50);
             this.lbl_VirtualIndexer.Name = "lbl_VirtualIndexer";
-            this.lbl_VirtualIndexer.Size = new System.Drawing.Size(45, 16);
+            this.lbl_VirtualIndexer.Size = new System.Drawing.Size(0, 16);
             this.lbl_VirtualIndexer.TabIndex = 1;
-            this.lbl_VirtualIndexer.Text = "label2";
             // 
             // lbl_TraceabilityStates
             // 
@@ -590,9 +587,8 @@
             this.lbl_TraceabilityStates.ForeColor = System.Drawing.Color.Green;
             this.lbl_TraceabilityStates.Location = new System.Drawing.Point(121, 25);
             this.lbl_TraceabilityStates.Name = "lbl_TraceabilityStates";
-            this.lbl_TraceabilityStates.Size = new System.Drawing.Size(45, 16);
+            this.lbl_TraceabilityStates.Size = new System.Drawing.Size(0, 16);
             this.lbl_TraceabilityStates.TabIndex = 1;
-            this.lbl_TraceabilityStates.Text = "label2";
             // 
             // label23
             // 
@@ -665,9 +661,9 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Image = global::TraceabilityConnector.Properties.Resources.sch;
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(793, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(754, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(102, 40);
+            this.pictureBox1.Size = new System.Drawing.Size(141, 53);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -832,9 +828,9 @@
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.groupBox2.Location = new System.Drawing.Point(513, 50);
+            this.groupBox2.Location = new System.Drawing.Point(513, 76);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(353, 96);
+            this.groupBox2.Size = new System.Drawing.Size(353, 70);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Server";
@@ -843,7 +839,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(17, 55);
+            this.label6.Location = new System.Drawing.Point(17, 43);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 16);
             this.label6.TabIndex = 0;
@@ -854,7 +850,7 @@
             this.lblPingStatus.AutoSize = true;
             this.lblPingStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPingStatus.ForeColor = System.Drawing.Color.Green;
-            this.lblPingStatus.Location = new System.Drawing.Point(83, 55);
+            this.lblPingStatus.Location = new System.Drawing.Point(83, 43);
             this.lblPingStatus.Name = "lblPingStatus";
             this.lblPingStatus.Size = new System.Drawing.Size(45, 16);
             this.lblPingStatus.TabIndex = 1;
@@ -865,7 +861,7 @@
             this.lblServerIp.AutoSize = true;
             this.lblServerIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblServerIp.ForeColor = System.Drawing.Color.Green;
-            this.lblServerIp.Location = new System.Drawing.Point(83, 32);
+            this.lblServerIp.Location = new System.Drawing.Point(83, 20);
             this.lblServerIp.Name = "lblServerIp";
             this.lblServerIp.Size = new System.Drawing.Size(45, 16);
             this.lblServerIp.TabIndex = 1;
@@ -875,17 +871,29 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(17, 32);
+            this.label27.Location = new System.Drawing.Point(17, 20);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(48, 16);
             this.label27.TabIndex = 0;
             this.label27.Text = "Server";
             // 
+            // lblBuild
+            // 
+            this.lblBuild.AutoSize = true;
+            this.lblBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuild.Location = new System.Drawing.Point(757, 60);
+            this.lblBuild.Name = "lblBuild";
+            this.lblBuild.Size = new System.Drawing.Size(102, 13);
+            this.lblBuild.TabIndex = 22;
+            this.lblBuild.Text = "Build 20170718.001";
+            // 
             // TraceabilityConnector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.MintCream;
             this.ClientSize = new System.Drawing.Size(898, 639);
+            this.Controls.Add(this.lblBuild);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btn_ByPass2);
             this.Controls.Add(this.btnPingServer);
@@ -1004,6 +1012,7 @@
         private System.Windows.Forms.Label lblPingStatus;
         private System.Windows.Forms.Label lblServerIp;
         private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label lblBuild;
     }
 }
 

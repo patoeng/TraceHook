@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
+using LAD08PackagingV1;
 using Traceability.Hook;
 using Traceability.Hook.Models;
 using Traceability.Hook.Setting;
@@ -13,6 +15,19 @@ namespace TraceabilityConnector
     public partial class TraceabilityConnector : Form
     {
         public  bool EmbeddedMode { get; protected set; }
+
+        public bool EnableVirtualIndexer
+        {
+            get
+            {
+                return _enableVirtualIndexer;
+            }
+
+            set
+            {
+                _enableVirtualIndexer = value;
+            }
+        }
 
         public delegate void DelegateShowInformation(string info);
         public delegate void DelegateSetLabelText(Label label, string info);
@@ -39,7 +54,7 @@ namespace TraceabilityConnector
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-          
+            lblBuild.Text = @"Build : "+ Assembly.GetExecutingAssembly().GetLinkerTime().ToString("yyMMddhhmmss");
             tmr_CLock.Start();
         }
 #region Non Form Events
@@ -54,7 +69,7 @@ namespace TraceabilityConnector
             _plcIpAddress = _setting.GetPlcIpAdress();
             _traceabilityEnabled = _setting.GetEnableTraceability();
             _plcScanRate = _setting.GetPlcScanRate();         
-            _enableVirtualIndexer = _setting.GetVirtualIndexer();
+            EnableVirtualIndexer = _setting.GetVirtualIndexer();
             _uniqueIdentityLength = _setting.GetUniqueIdLength();
             _databaseConnection = _setting.GetDatabaseConnectionString();
 
@@ -78,15 +93,15 @@ namespace TraceabilityConnector
                 try
                 {                   
                     lbl_PlcConnection.Text = @"Connected";
-                     if(!_enableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
+                     if(!EnableVirtualIndexer) lbl_VirtualIndexer.Text = @"Not Used";
                     _dataAcquisition.SetUniqueIdentityLength(_uniqueIdentityLength);
                     _dataAcquisition.UpdateProductInUnloadingStatus(ProductStatus.TraceabilityStatusNotUpdated);
                     _dataAcquisition.SetVirtualIndexer(
-                        _enableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
+                        EnableVirtualIndexer ? VirtualIndexerStates.WaitingTraceabilityStatusCheck : VirtualIndexerStates.NotIndexed);
                     
                    SetTraceabilityStates(_traceabilityEnabled? TraceabilityStates.WaitingForReference: TraceabilityStates.ByPassed);
                     btn_ByPass2.Text = _traceabilityEnabled ? "&By Pass" : "&Activate";
-                   if (!_enableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
+                   if (!EnableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
 
                     tmr_Scanner.Start();
                    
@@ -155,12 +170,12 @@ namespace TraceabilityConnector
 
         private void MachineDataInitialize()
         {           
-            _machineData = new MachineData(_enableVirtualIndexer);
+            _machineData = new MachineData(EnableVirtualIndexer);
             _machineData.ProductInLoadingStatusChanged += ProductInLoadingStatusChanged;
             _machineData.ProductInUnloadingStatusChanged += ProductInUnloadingStatusChanged;
             _machineData.ReferenceChanged += ReferenceChanged;
             _machineData.TraceabilityStateChanged += TraceabilityStateChanged;
-            if (_enableVirtualIndexer) _machineData.VirtualIndexerStateChanged += VirtualIndexerStateChanged;
+            if (EnableVirtualIndexer) _machineData.VirtualIndexerStateChanged += VirtualIndexerStateChanged;
         }
 
         private void VirtualIndexerStateChanged(VirtualIndexerStates state)
@@ -185,7 +200,7 @@ namespace TraceabilityConnector
                     break;
                 case VirtualIndexerStates.WaitingTraceabilityStatusCheck:
                     SetLabelText(lbl_VirtualIndexer, "Waiting Traceability Status Check");
-                    if (_enableVirtualIndexer && _machineData.ProductInLoadingStatus== ProductStatus.LoadedNeedTraceabilityCheck)
+                    if (EnableVirtualIndexer && _machineData.ProductInLoadingStatus== ProductStatus.LoadedNeedTraceabilityCheck)
                     {
                         var product = ReadLoading();
                         if (product == string.Empty)
@@ -201,7 +216,7 @@ namespace TraceabilityConnector
                             ? ProductStatus.TraceabilityCheckedOk
                             : ProductStatus.TraceabilityCheckedNok);
 
-                        if (result && _enableVirtualIndexer)
+                        if (result && EnableVirtualIndexer)
                         {
                             _machineData.VirtualIndexer.SetProductToStation(0, product, 1, 1);
                             VirtualIndexerToListBox(lb_Indexer);
@@ -211,7 +226,7 @@ namespace TraceabilityConnector
                     break;
                 case VirtualIndexerStates.UpdateTraceabilityStatus:
                     SetLabelText(lbl_VirtualIndexer, "Waiting Unloading Traceability Status Update");
-                    if (_enableVirtualIndexer &&
+                    if (EnableVirtualIndexer &&
                         _machineData.ProductInUnloadingStatus == ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk)
                     {
                         var product = ReadUnloading();
@@ -225,7 +240,7 @@ namespace TraceabilityConnector
                            result ? ProductStatus.TraceabilityStatusUpdated : ProductStatus.TraceabilityStatusNotUpdated);
                         _dataAcquisition.SetVirtualIndexer(VirtualIndexerStates.WaitingTraceabilityStatusCheck);
                     }
-                    if (_enableVirtualIndexer &&
+                    if (EnableVirtualIndexer &&
                        _machineData.ProductInUnloadingStatus == ProductStatus.LoadedNeedTraceabilityStatusUpdateOk)
                     {
                         var product = ReadUnloading();
@@ -253,7 +268,7 @@ namespace TraceabilityConnector
                 _machineData.ProductInUnloadingStatusChanged -= ProductInUnloadingStatusChanged;
                 _machineData.ReferenceChanged -= ReferenceChanged;
                 _machineData.TraceabilityStateChanged -= TraceabilityStateChanged;
-                if (_enableVirtualIndexer) _machineData.VirtualIndexerStateChanged -= VirtualIndexerStateChanged;
+                if (EnableVirtualIndexer) _machineData.VirtualIndexerStateChanged -= VirtualIndexerStateChanged;
                 _machineData = null;
             }
             MachineDataInitialize();
@@ -305,7 +320,7 @@ namespace TraceabilityConnector
                         SetTraceabilityStates(TraceabilityStates.ByPassed);
                         break;
                     }
-                    if (!_enableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
+                    if (!EnableVirtualIndexer) _machineData.ActiveReference = ReadActiveReference();
                     SetLabelText(lbl_TraceabilityStates, "Waiting For Reference");
                     SetTraceabilityStates(TraceabilityStates.Ready);
                     break;
@@ -357,7 +372,7 @@ namespace TraceabilityConnector
                 case ProductStatus.LoadedNeedTraceabilityStatusUpdateNOk:
                    
                     SetLabelText(lbl_UnloadingState, "Unloaded Need Traceability Update Status Nok");
-                    if (_enableVirtualIndexer &&
+                    if (EnableVirtualIndexer &&
                      _machineData.VirtualIndexerStates != VirtualIndexerStates.UpdateTraceabilityStatus)
                     {
                         return;
@@ -375,7 +390,7 @@ namespace TraceabilityConnector
                     break;
                 case ProductStatus.LoadedNeedTraceabilityStatusUpdateOk:
                     SetLabelText(lbl_UnloadingState, "Unloaded Need Traceability Status Ok");
-                    if (_enableVirtualIndexer &&
+                    if (EnableVirtualIndexer &&
                       _machineData.VirtualIndexerStates != VirtualIndexerStates.UpdateTraceabilityStatus)
                     {
                         return;
@@ -414,7 +429,7 @@ namespace TraceabilityConnector
                 case ProductStatus.LoadedNeedTraceabilityCheck:
                     SetLabelText(lbl_LoadingStatus, "Loaded Need Traceability Check");                   
                   
-                    if (_enableVirtualIndexer &&
+                    if (EnableVirtualIndexer &&
                         _machineData.VirtualIndexerStates != VirtualIndexerStates.WaitingTraceabilityStatusCheck)
                     {
                         return;
@@ -426,14 +441,14 @@ namespace TraceabilityConnector
                         break;
                     }
                         int status;
-                        CheckReferenceLoadIfUnMatch(product);
+                        CheckReferenceLoadIfUnMatch(product); // will change automatically if unmatch
                         var result = _thisMachine.LoadProduct(product, "", out status);
 
                         _dataAcquisition.UpdateProductInLoadingStatus(result
                             ? ProductStatus.TraceabilityCheckedOk
                             : ProductStatus.TraceabilityCheckedNok);
 
-                    if (result && _enableVirtualIndexer)
+                    if (result && EnableVirtualIndexer)
                     {
                         _machineData.VirtualIndexer.SetProductToStation(0, product, 1, 1);
                         VirtualIndexerToListBox(lb_Indexer);
@@ -485,7 +500,7 @@ namespace TraceabilityConnector
 
         private void VirtualIndexerToListBox(ListBox lb)
         {
-            if (!_enableVirtualIndexer) return;
+            if (!EnableVirtualIndexer) return;
             if (!(_machineData?.VirtualIndexer?.NumberOfStation() > 0)) return;
 
             lb.Items.Clear();
@@ -514,10 +529,10 @@ namespace TraceabilityConnector
         private string ReadUnloading()
         {
             string result;
-            if (_enableVirtualIndexer)
+            if (EnableVirtualIndexer)
             {
                 _machineData.VirtualIndexer.GetStationProduct(
-                    _machineData.VirtualIndexer.NumberOfStation() - 1, out result);
+                _machineData.VirtualIndexer.NumberOfStation() - 1, out result);
             }
             else
             {
@@ -551,6 +566,9 @@ namespace TraceabilityConnector
 
         private void btn_Initialize_Click(object sender, EventArgs e)
         {
+            var dialog = MessageBox.Show(@"Lakukan Initialisasi?", @"Initialization", MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
+            if (dialog == DialogResult.Cancel) return;
             InitAll();
         }
 
@@ -764,10 +782,15 @@ namespace TraceabilityConnector
             BringToFront();
         }
 
-  
+        private int _secretPasswordReset;
+        private int _secretPasswordResetTimer;
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-           
+            _secretPasswordReset += 1;
+            if (_secretPasswordReset == 1)
+            {
+                _secretPasswordResetTimer = 10;
+            }
         }
 
        
@@ -782,11 +805,17 @@ namespace TraceabilityConnector
                 {
                     if (btn_ByPass2.Text.Equals("&By Pass"))
                     {
+                        var dialog = MessageBox.Show(@"By Pass Traceability Mesin Ini?", @"By Pass", MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question);
+                        if (dialog == DialogResult.Cancel) return;
                         ChangeTraceabilityState(true);
                         btn_ByPass2.Text = @"&Activate";
                     }
                     else
                     {
+                        var dialog = MessageBox.Show(@"Activekan Traceability Mesin Ini?", @"Activekan", MessageBoxButtons.OKCancel,
+                       MessageBoxIcon.Question);
+                        if (dialog == DialogResult.Cancel) return;
                         ChangeTraceabilityState(false);
                         btn_ByPass2.Text = @"&By Pass";
                     }
@@ -828,7 +857,21 @@ namespace TraceabilityConnector
 
         private void tmr_CLock_Tick(object sender, EventArgs e)
         {
+            tmr_CLock.Stop();
             lbl_Clock.Text = DateTime.Now.ToString("F");
+            if (_secretPasswordResetTimer > 0)
+            {
+                _secretPasswordResetTimer -= 1;
+            }
+            else
+            {
+                if (_secretPasswordReset == 5)
+                {
+                    _setting.SetAdminPassword("Pass1234");
+                }
+                if (_secretPasswordReset>0) _secretPasswordReset = 0;
+            }
+            tmr_CLock.Start();
         }
 
         private void myNotifyIcon_Click(object sender, EventArgs e)

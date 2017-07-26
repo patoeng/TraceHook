@@ -141,7 +141,7 @@
             // 
             this.cb_EnableTraceability.AutoSize = true;
             this.cb_EnableTraceability.Enabled = false;
-            this.cb_EnableTraceability.Location = new System.Drawing.Point(183, 103);
+            this.cb_EnableTraceability.Location = new System.Drawing.Point(183, 78);
             this.cb_EnableTraceability.Name = "cb_EnableTraceability";
             this.cb_EnableTraceability.Size = new System.Drawing.Size(59, 17);
             this.cb_EnableTraceability.TabIndex = 4;
@@ -151,7 +151,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 126);
+            this.label5.Location = new System.Drawing.Point(15, 101);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(140, 13);
             this.label5.TabIndex = 0;
@@ -160,7 +160,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 218);
+            this.label6.Location = new System.Drawing.Point(18, 191);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 13);
             this.label6.TabIndex = 0;
@@ -169,7 +169,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 192);
+            this.label7.Location = new System.Drawing.Point(18, 168);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(75, 13);
             this.label7.TabIndex = 0;
@@ -178,7 +178,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 101);
+            this.label4.Location = new System.Drawing.Point(15, 76);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 13);
             this.label4.TabIndex = 0;
@@ -187,7 +187,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 75);
+            this.label3.Location = new System.Drawing.Point(15, 50);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(114, 13);
             this.label3.TabIndex = 0;
@@ -196,15 +196,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 49);
+            this.label2.Location = new System.Drawing.Point(18, 219);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Number Of Station";
+            this.label2.Visible = false;
             // 
             // tb_DbConnectionString
             // 
-            this.tb_DbConnectionString.Location = new System.Drawing.Point(183, 126);
+            this.tb_DbConnectionString.Location = new System.Drawing.Point(183, 101);
             this.tb_DbConnectionString.Multiline = true;
             this.tb_DbConnectionString.Name = "tb_DbConnectionString";
             this.tb_DbConnectionString.ReadOnly = true;
@@ -213,7 +214,7 @@
             // 
             // tb_AdminPassword
             // 
-            this.tb_AdminPassword.Location = new System.Drawing.Point(184, 216);
+            this.tb_AdminPassword.Location = new System.Drawing.Point(184, 191);
             this.tb_AdminPassword.Name = "tb_AdminPassword";
             this.tb_AdminPassword.PasswordChar = '.';
             this.tb_AdminPassword.ReadOnly = true;
@@ -222,7 +223,7 @@
             // 
             // tb_PlcIpAddress
             // 
-            this.tb_PlcIpAddress.Location = new System.Drawing.Point(183, 190);
+            this.tb_PlcIpAddress.Location = new System.Drawing.Point(183, 165);
             this.tb_PlcIpAddress.Name = "tb_PlcIpAddress";
             this.tb_PlcIpAddress.ReadOnly = true;
             this.tb_PlcIpAddress.Size = new System.Drawing.Size(231, 20);
@@ -230,7 +231,7 @@
             // 
             // tb_UniqueIdentityLength
             // 
-            this.tb_UniqueIdentityLength.Location = new System.Drawing.Point(183, 72);
+            this.tb_UniqueIdentityLength.Location = new System.Drawing.Point(183, 47);
             this.tb_UniqueIdentityLength.Name = "tb_UniqueIdentityLength";
             this.tb_UniqueIdentityLength.ReadOnly = true;
             this.tb_UniqueIdentityLength.Size = new System.Drawing.Size(231, 20);
@@ -238,11 +239,12 @@
             // 
             // tb_NumberOfStation
             // 
-            this.tb_NumberOfStation.Location = new System.Drawing.Point(183, 46);
+            this.tb_NumberOfStation.Location = new System.Drawing.Point(183, 216);
             this.tb_NumberOfStation.Name = "tb_NumberOfStation";
             this.tb_NumberOfStation.ReadOnly = true;
             this.tb_NumberOfStation.Size = new System.Drawing.Size(231, 20);
             this.tb_NumberOfStation.TabIndex = 2;
+            this.tb_NumberOfStation.Visible = false;
             // 
             // HookSetting
             // 

@@ -57,6 +57,7 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\ArrayFunctions.cs" />
+    <Compile Include="Helper\AssemblyExtension.cs" />
     <Compile Include="Helper\ModbusTcpHelper.cs" />
     <Compile Include="Helper\PlcCommand.cs" />
     <Compile Include="Helper\TestConnection.cs" />
